@@ -95,3 +95,14 @@ class StaffResource(Resource):
             "email": staff.email,
             "contact_info": staff.contact_info,
         }, 200
+    def delete(self, id):
+        staff = Staff.query.filter_by(id=id).first() #Fetch the staff member by ID
+        if staff is None:
+            return{"error message": "Staff not found"}, 404 #ie if the staff doesnt exist
+        
+        # Then we delete the staff member from the database
+        db.session.delete(staff)
+        db.session.commit() #Commits the deletion
+
+        return{"message": "Staff deleted successfully"}, 204 #No content
+

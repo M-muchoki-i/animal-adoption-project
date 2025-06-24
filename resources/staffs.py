@@ -1,10 +1,11 @@
 from flask_restful import Resource
 from models import Staff, db
 from flask import request
+from datetime import datetime
 
 
 # CRUD methods to handle our staffs
-# Class resource to get all the staffs in the database and by their Id
+# Class resource to get all the staffs and by the id, add a staff(post), update the staffs(Patch), and delete a staff in the database.
 class StaffResource(Resource):
     def get(self, id=None):
         if id is None:
@@ -23,6 +24,36 @@ class StaffResource(Resource):
                 staff.to_dict(),
                 200,
             )  # Return staff members details with 200 code status
+
+    def post(self):
+        # Get the JSON data from the request body
+        data = request.get_json()
+
+        # Validate our requets body
+
+        if "name" in data and not isinstance(data["name"], str):
+            return {"error": ["Validation error: 'name' must be a string"]}, 400
+        if "email" in data and not isinstance(data["email"], str):
+            return {"error": ["Validation error: 'email' must be a string"]}, 400
+        if "contact_info" in data and not isinstance(data["contact_info"], str):
+            return {"error": ["Validation error: 'contact_info' must be a string"]}, 400
+
+        # Create new staff member instance
+
+        new_staff = Staff(
+            name=data["name"],
+            email=data["email"],
+            contact_info=data["contact_info"],
+            created_at=datetime.utcnow(),  # Sets the creation timestamp
+        )
+
+        # Then add the new staff member to the session and commit to our database
+        return {
+            "id": new_staff.id,
+            "name": new_staff.name,
+            "email": new_staff.email,
+            "contact_info": new_staff.contact_info,
+        }, 201
 
     def patch(self, id):
         staff = Staff.query.filter_by(id=id).first()  # Searches the staff by the ID
@@ -59,8 +90,8 @@ class StaffResource(Resource):
         # Finally return the updated staff member details
 
         return {
-            "id":staff.id,
-            "name":staff.name,
+            "id": staff.id,
+            "name": staff.name,
             "email": staff.email,
             "contact_info": staff.contact_info,
         }, 200

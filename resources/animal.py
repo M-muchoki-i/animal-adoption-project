@@ -28,13 +28,29 @@ class AnimalResource(Resource):
 
         db.session.add(animals)
         db.session.commit()
-        return {"message": "Category created successfully"}, 201
-    # def patch(self, id):
-    #     data = self.parser.parse_args()
+        return {"message": "Animal created successfully"}, 201
+    
 
-    #     animal = Animal.query.filter_by(id=id).first()
-    #     if animal is None:
-    #         return {"message":"Animal not found"}, 404
-    #     animal.name = data['name']
+    def patch(self, id):
+        animal = Animal.query.filter_by(id=id).first()
+        if not animal:
+            return {"message": "Animal not found"}, 404
 
-    #     db.session.commit()
+        data = self.parser.parse_args()
+
+        # Update only fields provided in the request
+        if data['name'] is not None:
+            animal.name = data['name']
+        if data['species'] is not None:
+            animal.species = data['species']
+        if data['age'] is not None:
+            animal.age = data['age']
+        if data['location'] is not None:
+            animal.location = data['location']
+
+        db.session.commit()
+
+        return {"message": "Update is successful",
+                "animal": animal.to_dict()
+                }, 201
+    

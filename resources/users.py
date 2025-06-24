@@ -1,8 +1,14 @@
-from flask_restful import Resource, request, jsonify
+from flask_restful import Resource, request, jsonify,reqparse
 from models import User, db
 
 
 class UserResources(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument("name", type=str, required=True, help="Name is required")
+    parser.add_argument("email", type=str, required=True, help="Email is required")
+    parser.add_argument("password", type=str, required=False)
+    parser.add_argument("contact_info", type=str, required=True, help="Contact_info is required")
+
     def get(self, id=None):
         if id is None:
             users = User.query.all()
@@ -10,18 +16,24 @@ class UserResources(Resource):
 
         user = User.query.filter_by(id=id).first()
         if user is None:
-            return {"message": "User not found"}, 404
+            return {"message": "User not found"}, 404 #error message if user not found
         return user.to_dict()
 
     def post(self):
-        data = request.get_json()
+        data = self.parser.parse_args()
         # create Apperance object
         try:
+            # validate the uniquness of email and contact info
+            if User.query.filter_by(email=data['email']).first():
+                return {"error": "Email already exists"}, 409
+            if User.query.filter_by(contact_info=data['contact_info']).first():
+                return {"error": "Contact info already exists"}, 409
+            
             new_user = User(
-                name=data.get("name"),
-                email=data.get("email"),
+                name=data["name"],
+                email=data["email"],
                 password=data.get("password"),
-                contact_info=data.get("contact_info"),
+                contact_info=data["contact_info"],
             )
             db.session.add(new_user)
             db.session.commit()
@@ -43,7 +55,7 @@ class UserResources(Resource):
                 password=data.get("password"),
                 contact_info=data.get("contact_info"),
             )
-            db.session.add(new_user)
+            # commit the update to the database
             db.session.commit()
 
             # Successful response structure

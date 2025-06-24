@@ -53,4 +53,11 @@ class AnimalResource(Resource):
         return {"message": "Update is successful",
                 "animal": animal.to_dict()
                 }, 201
-    
+    def delete(self, id):
+        animal = Animal.query.filter_by(id=id).first()
+        if animal is None:
+            return {"message":"Animal delete successfully"}, 404
+
+        db.session.delete(animal)
+        db.session.commit()
+        return {"message": "Deleted successfully"}, 201

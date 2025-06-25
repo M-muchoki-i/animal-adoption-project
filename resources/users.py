@@ -62,6 +62,7 @@ class UserResources(Resource):
         except Exception as e:
             db.session.rollback()
             return {"error": str(e)}, 500
+        
 
       
     def delete(self, id):

@@ -47,6 +47,14 @@ class StaffResource(Resource):
             created_at=datetime.utcnow(),  # Sets the creation timestamp
         )
 
+        # Add the new staff member to the session and commit to the database
+        
+        db.session.add(new_staff)  # Make sure to import your db session
+        db.session.commit()  # Commit the transaction to the database
+
+
+
+
         # Then add the new staff member to the session and commit to our database
         return {
             "id": new_staff.id,

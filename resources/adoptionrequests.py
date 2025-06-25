@@ -2,13 +2,13 @@ from flask import request
 from flask_restful import Resource, reqparse
 from models import AdoptionRequest, db
 
-class AnimalResource(Resource):
+class AdoptionResource(Resource):
     parser = reqparse.RequestParser()
-    parser.add_argument('request_date', required =True, help="Request date is required")
+    parser.add_argument('request_date', required = False, help="Request date is required")
     parser.add_argument('status', required=True, help="Status is required")
     parser.add_argument('user_id', required=False)
     parser.add_argument('animal_id', required=False)
-    parser.add_argument('created_at', required=True, help ="Created time is required")
+    parser.add_argument('created_at', required=False, help ="Created time is required")
 
     def get(self, id=None):
         if id is None:
@@ -33,8 +33,7 @@ class AnimalResource(Resource):
             return {"message": "Animal adoption request not found"}, 404
 
         data = self.parser.parse_args()
-
-        # Update only fields provided in the request
+        
         if data['request_date'] is not None:
             adoption_request.request_date = data['request_date']
         if data['status'] is not None:

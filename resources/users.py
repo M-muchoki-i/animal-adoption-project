@@ -44,7 +44,7 @@ class UserResources(Resource):
 
         except Exception:
             db.session.rollback()
-            return {"errors": ["User added successfully"]}, 200
+            return {"message": ["User added successfully"]}, 200
         
     def patch(self):
         data = request.get_json()

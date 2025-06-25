@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 # from flask_cors import CORS
 from flask_restful import Api
 from models import db
+from resources.adoptionrequests import AdoptionResource
 # from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 
 
@@ -19,7 +20,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 migrate=Migrate(app, db)
 api = Api(app)
-    
+api.add_resource(AdoptionResource, "/adoptionrequest", "/adoptionrequest/<int:id>")
+# api.add_resource(AdoptionRequest, "/adoptionrequest")
+# api.add_resource(AdoptionRequest, "/adoptionrequest/<int:id>")
 # CORS(app)
   
 

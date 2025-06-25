@@ -49,4 +49,11 @@ class AnimalResource(Resource):
         return {"message": "Update is successful",
                 "adoption request": adoption_request.to_dict()
                 }, 201
-    
+    def delete(self, id):
+        adoption_request = AdoptionRequest.query.filter_by(id=id).first()
+        if adoption_request is None:
+            return {"message":"Adoption request deleted successfully"}, 404
+
+        db.session.delete(adoption_request)
+        db.session.commit()
+        return {"message": "Deleted successfully"}, 201

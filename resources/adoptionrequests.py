@@ -2,7 +2,7 @@ from flask import request
 from flask_restful import Resource, reqparse
 from models import AdoptionRequest, db
 
-class AnimalResource(Resource):
+class AdoptionResource(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument('request_date', required =True, help="Request date is required")
     parser.add_argument('status', required=True, help="Status is required")

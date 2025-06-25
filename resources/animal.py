@@ -46,14 +46,18 @@ class AnimalResource(Resource):
             animal.species = data['species']
         if data['age'] is not None:
             animal.age = data['age']
-        if data[''] is not None:
-            animal.location = data['location']
+        if data['gender'] is not None:
+            animal.gender = data['gender']
+        if data['description'] is not None:
+            animal.description = data['description']
+        if data['adoption_status'] is not None:
+            animal.adoption_status = data['adoption_status']
+        if data['health_status'] is not None:
+            animal.health_status = data['health_status']
 
         db.session.commit()
 
-        return {"message": "Update is successful",
-                "animal": animal.to_dict()
-                }, 201
+        return {"message": "Update is successful"}, 201
     def delete(self, id):
         animal = Animal.query.filter_by(id=id).first()
         if animal is None:

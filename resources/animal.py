@@ -7,6 +7,7 @@ class AnimalResource(Resource):
     parser.add_argument('name', required =True, help="Name is required")
     parser.add_argument('species', required=True, help="Species is required")
     parser.add_argument('age', required=False)
+    parser.add_argument('image', required=False)
     parser.add_argument('gender', required =False)
     parser.add_argument('description', required=False)
     parser.add_argument('adoption_status', required=True, help ="Adoption status is required")
@@ -54,6 +55,8 @@ class AnimalResource(Resource):
             animal.adoption_status = data['adoption_status']
         if data['health_status'] is not None:
             animal.health_status = data['health_status']
+        if data['image'] is not None:
+            animal.health_status = data['image']
 
         db.session.commit()
 

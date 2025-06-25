@@ -1,4 +1,5 @@
-from flask_restful import Resource, request, jsonify,reqparse
+from flask import request
+from flask_restful import Resource, reqparse
 from models import User, db
 
 
@@ -12,59 +13,58 @@ class UserResources(Resource):
     def get(self, id=None):
         if id is None:
             users = User.query.all()
-            return [user.to_dict() for user in users]
+            return [user.to_dict() for user in users], 200
 
         user = User.query.filter_by(id=id).first()
         if user is None:
-            return {"message": "User not found"}, 404 #error message if user not found
-        return user.to_dict()
-
+            return {"message": "User not found"}, 404
+        return user.to_dict(), 200
+    
     def post(self):
-        data = self.parser.parse_args()
-        # create Apperance object
+        data = UserResources.parser.parse_args()
         try:
-            # validate the uniquness of email and contact info
-            if User.query.filter_by(email=data['email']).first():
+            # Check for uniqueness
+            if User.query.filter_by(email=data["email"]).first():
                 return {"error": "Email already exists"}, 409
-            if User.query.filter_by(contact_info=data['contact_info']).first():
+            if User.query.filter_by(contact_info=data["contact_info"]).first():
                 return {"error": "Contact info already exists"}, 409
-            
+
             new_user = User(
                 name=data["name"],
                 email=data["email"],
                 password=data.get("password"),
-                contact_info=data["contact_info"],
+                contact_info=data["contact_info"]
             )
             db.session.add(new_user)
             db.session.commit()
 
-            # Successful response structure
-            return jsonify(new_user.to_dict()), 201
-
+            return new_user.to_dict(), 201
         except Exception:
             db.session.rollback()
-            return {"errors": ["User Not found "]}, 400
+            return {"message": ["User added successfully"]}, 200
         
-    def patch(self):
+    def patch(self, id):
+        user = User.query.filter_by(id=id).first()
+        if not user:
+            return {"error": "User not found"}, 404
+
         data = request.get_json()
-        # create Apperance object
+
         try:
-            new_user = User(
-                name=data.get("name"),
-                email=data.get("email"),
-                password=data.get("password"),
-                contact_info=data.get("contact_info"),
-            )
-            # commit the update to the database
+            user.name = data.get("name", user.name)
+            user.email = data.get("email", user.email)
+            user.password = data.get("password", user.password)
+            user.contact_info = data.get("contact_info", user.contact_info)
+
             db.session.commit()
+            return user.to_dict(), 200
 
-            # Successful response structure
-            return jsonify(new_user.to_dict()), 201
-
-        except Exception:
+        except Exception as e:
             db.session.rollback()
-            return {"errors": ["User Not found "]}, 400
+            return {"error": str(e)}, 500
         
+
+      
     def delete(self, id):
         user = User.query.filter_by(id=id).first()  # Fetch the user member by ID
         if user is None:
@@ -76,4 +76,5 @@ class UserResources(Resource):
         db.session.delete(user)
         db.session.commit()  # Commits the deletion
 
-        return {"message": "User deleted successfully"}, 204  # No content
+        return {"message": "User deleted successfully"}, 202  # No content
+

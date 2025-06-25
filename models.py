@@ -21,29 +21,38 @@ db = SQLAlchemy(metadata=metadata)
 
 class User(db.Model, SerializerMixin):
     __tablename__ = "users"
+    serialize_rules = ("-adoptionrequests.user",)
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String)
-    # role = db.Column(db.String, default='user')
+    
     contact_info = db.Column(db.String, unique=True, nullable=False)
     created_at = db.Column(db.TIMESTAMP)
-    # adoption_requests = db.relationship('AdoptionRequest', backref='user', cascade='all, delete')
+
+    adoptionrequests = db.relationship('AdoptionRequest', back_populates='user', cascade='all, delete')
 
 class Animal(db.Model, SerializerMixin):
     __tablename__ = "animal"
+    serialize_rules = ("-adoptionrequests.animal")
+    
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=True)
+    species = db.Column(db.String, nullable=True)
     age = db.Column(db.Integer, nullable=False)
     gender = db.Column(db.String, nullable=False)
     health_status = db.Column(db.String, nullable=False)
     adoption_status = db.Column(db.String, default='Available')
     created_at = db.Column(db.TIMESTAMP)
-    # adoption_requests = db.relationship('AdoptionRequest', backref='animal', cascade='all, delete')
+
+    adoptionrequests = db.relationship('AdoptionRequest', back_populates='animal', cascade='all, delete')
 
 class AdoptionRequest(db.Model, SerializerMixin):
     __tablename__ = "adoptionrequests"
+    serialize_rules = ("-user.adoptionrequests", "-animal.adoptionrequests")
+
     id = db.Column(db.Integer, primary_key=True)
     request_date = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     status = db.Column(db.String, default='pending', nullable=False)
@@ -52,6 +61,9 @@ class AdoptionRequest(db.Model, SerializerMixin):
     animal_id = db.Column(db.Integer, db.ForeignKey('animal.id'))
     created_at = db.Column(db.DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
+
+    user = db.relationship('User', back_populates='adoptionrequests')
+    animal = db.relationship('Animal', back_populates='adoptionrequests')
 
 class Staff(db.Model, SerializerMixin):
     __tablename__ = "staffs"

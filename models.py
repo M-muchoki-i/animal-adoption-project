@@ -35,17 +35,18 @@ class User(db.Model, SerializerMixin):
 
 class Animal(db.Model, SerializerMixin):
     __tablename__ = "animal"
-    serialize_rules = ("-adoptionrequests.animal")
+    serialize_rules = ("-adoptionrequests.animal",)
     
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=True)
     species = db.Column(db.String, nullable=True)
+    image = db.Column(db.String, nullable =True )
     age = db.Column(db.Integer, nullable=False)
     gender = db.Column(db.String, nullable=False)
     health_status = db.Column(db.String, nullable=False)
     adoption_status = db.Column(db.String, default='Available')
-    created_at = db.Column(db.TIMESTAMP)
+    created_at = db.Column(db.TIMESTAMP, default=datetime.now())
 
     adoptionrequests = db.relationship('AdoptionRequest', back_populates='animal', cascade='all, delete')
 

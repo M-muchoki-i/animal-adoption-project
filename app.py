@@ -6,6 +6,11 @@ from flask_restful import Api
 from models import db
 # from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 
+from resources.animal import AnimalResource
+from resources.staffs import StaffResource
+from resources.users import UserResources
+# from resources.adoptionrequests import AdoptionResource
+
 
 
 
@@ -23,7 +28,11 @@ api = Api(app)
 # CORS(app)
   
 
- 
+api.add_resource(AnimalResource, '/animals', '/animals/<int:id>') 
+api.add_resource(StaffResource, '/staffs', '/staffs/<int:id>') 
+api.add_resource(UserResources, '/users', '/users/<int:id>') 
+# api.add_resource(AdoptionResource, '/adpotions', '/adoptions/<int:id>') 
+
 # Entry point for running directly
 if __name__ == '__main__':
     app.run(port=5555)

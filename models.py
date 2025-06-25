@@ -21,16 +21,16 @@ db = SQLAlchemy(metadata=metadata)
 
 class User(db.Model, SerializerMixin):
     __tablename__ = "users"
-    serialize_rules = ("-adoptionrequests.user")
+    serialize_rules = ("-adoptionrequests.user",)
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String)
-    # role = db.Column(db.String, default='user')
+    
     contact_info = db.Column(db.String, unique=True, nullable=False)
     created_at = db.Column(db.TIMESTAMP)
-    
+
     adoptionrequests = db.relationship('AdoptionRequest', back_populates='user', cascade='all, delete')
 
 class Animal(db.Model, SerializerMixin):

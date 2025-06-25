@@ -18,5 +18,11 @@ class AnimalResource(Resource):
             adoption_request = AdoptionRequest.query.filter_by(id=id).first()
             if adoption_request:
                 return adoption_request.to_dict(), 200
-            return {"error": "Animal not found"}, 404
-    
+            return {"error": "Adoption request not found"}, 404
+    def post(self):
+        data = self.parser.parse_args()
+        adoption_data = AdoptionRequest(**data)
+
+        db.session.add(adoption_data)
+        db.session.commit()
+        return {"message": "Adoption request successfuly created"}, 201

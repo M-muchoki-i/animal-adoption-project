@@ -31,7 +31,7 @@ class User(db.Model, SerializerMixin):
     contact_info = db.Column(db.String, unique=True, nullable=False)
     created_at = db.Column(db.TIMESTAMP)
     
-    adoptionrequests = db.relationship('AdoptionRequest', backpopulates='user', cascade='all, delete')
+    adoptionrequests = db.relationship('AdoptionRequest', back_populates='user', cascade='all, delete')
 
 class Animal(db.Model, SerializerMixin):
     __tablename__ = "animal"
@@ -40,6 +40,7 @@ class Animal(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=True)
+    species = db.Column(db.String, nullable=True)
     age = db.Column(db.Integer, nullable=False)
     gender = db.Column(db.String, nullable=False)
     health_status = db.Column(db.String, nullable=False)

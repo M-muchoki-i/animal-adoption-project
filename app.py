@@ -9,7 +9,7 @@ from models import db
 from resources.animal import AnimalResource
 from resources.staffs import StaffResource
 from resources.users import UserResources
-# from resources.adoptionrequests import AdoptionResource
+from resources.adoptionrequests import AdoptionResource
 
 
 
@@ -31,7 +31,7 @@ api = Api(app)
 api.add_resource(AnimalResource, '/animals', '/animals/<int:id>') 
 api.add_resource(StaffResource, '/staffs', '/staffs/<int:id>') 
 api.add_resource(UserResources, '/users', '/users/<int:id>') 
-# api.add_resource(AdoptionResource, '/adpotions', '/adoptions/<int:id>') 
+api.add_resource(AdoptionResource, '/adpotions', '/adoptions/<int:id>') 
 
 # Entry point for running directly
 if __name__ == '__main__':

@@ -1,4 +1,5 @@
-from flask_restful import Resource, request, jsonify,reqparse
+from flask import request, jsonify
+from flask_restful import Resource, reqparse
 from models import User, db
 
 
@@ -43,7 +44,7 @@ class UserResources(Resource):
 
         except Exception:
             db.session.rollback()
-            return {"errors": ["User Not found "]}, 400
+            return {"errors": ["User added successfully"]}, 200
         
     def patch(self):
         data = request.get_json()
@@ -76,4 +77,4 @@ class UserResources(Resource):
         db.session.delete(user)
         db.session.commit()  # Commits the deletion
 
-        return {"message": "User deleted successfully"}, 204  # No content
+        return {"message": "User deleted successfully"}, 202  # No content

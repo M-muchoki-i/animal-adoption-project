@@ -26,3 +26,27 @@ class AnimalResource(Resource):
         db.session.add(adoption_data)
         db.session.commit()
         return {"message": "Adoption request successfuly created"}, 201
+    
+    def patch(self, id):
+        adoption_request = AdoptionRequest.query.filter_by(id=id).first()
+        if not adoption_request:
+            return {"message": "Animal adoption request not found"}, 404
+
+        data = self.parser.parse_args()
+
+        # Update only fields provided in the request
+        if data['request_date'] is not None:
+            adoption_request.request_date = data['request_date']
+        if data['status'] is not None:
+            adoption_request.status = data['status']
+        if data['user_id'] is not None:
+            adoption_request.user_id= data['user_id']
+        if data['animal_id'] is not None:
+            adoption_request.animal_id = data['animal_id']
+
+        db.session.commit()
+
+        return {"message": "Update is successful",
+                "adoption request": adoption_request.to_dict()
+                }, 201
+    

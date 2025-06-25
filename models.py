@@ -35,12 +35,12 @@ class User(db.Model, SerializerMixin):
 
 class Animal(db.Model, SerializerMixin):
     __tablename__ = "animal"
-    serialize_rules = ("-adoptionrequests.animal")
+    serialize_rules = ("-adoptionrequests.animal",)
     
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=True)
-    species = db.Column(db.String, nullable=True)
+    species = db.Column(db.String, nullable=False)
     age = db.Column(db.Integer, nullable=False)
     gender = db.Column(db.String, nullable=False)
     health_status = db.Column(db.String, nullable=False)

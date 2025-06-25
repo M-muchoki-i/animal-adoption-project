@@ -4,13 +4,13 @@ from models import Animal, db
 
 class AnimalResource(Resource):
     parser = reqparse.RequestParser()
-    parser.add_argument('name', required =True, help="Name is required")
-    parser.add_argument('species', required=True, help="Species is required")
-    parser.add_argument('age', required=False)
-    parser.add_argument('gender', required =False)
-    parser.add_argument('description', required=False)
-    parser.add_argument('adoption_status', required=True, help ="Adoption status is required")
-    parser.add_argument('health_status', required=False)
+    parser.add_argument('name',type=str, required =True, help="Name is required")
+    parser.add_argument('age', type=str,required=False)
+    parser.add_argument('species', type=str,required=False)
+    parser.add_argument('gender',type=str, required =False)
+    parser.add_argument('description', type=str, required=False)
+    parser.add_argument('adoption_status', type=str, required=True, help ="Adoption status is required")
+    parser.add_argument('health_status',type=str, required=False)
     
     
     def get(self, id=None):
@@ -46,14 +46,18 @@ class AnimalResource(Resource):
             animal.species = data['species']
         if data['age'] is not None:
             animal.age = data['age']
-        if data[''] is not None:
-            animal.location = data['location']
+        if data['gender'] is not None:
+            animal.species = data['gender']
+        if data['description'] is not None:
+            animal.species = data['description']
+        if data['adoption_status'] is not None:
+            animal.species = data['adoption_status']
+        if data['health_status'] is not None:
+            animal.species = data['health_status']
 
         db.session.commit()
 
-        return {"message": "Update is successful",
-                "animal": animal.to_dict()
-                }, 201
+        return {"message": "Update is successful"}, 201
     def delete(self, id):
         animal = Animal.query.filter_by(id=id).first()
         if animal is None:

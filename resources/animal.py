@@ -20,7 +20,7 @@ class AnimalResource(Resource):
         else:
             animal = Animal.query.filter_by(id=id).first()
             if animal:
-                return animal.to_dict(), 200
+                return animal.to_dict(), 201
             return {"error": "Animal not found"}, 404
         
     def post(self):

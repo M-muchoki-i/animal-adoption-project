@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import About from "./pages/About";
 import Testimonials from "./pages/Testimonials"; 
 import Animals from "./pages/Animals";
+import Home from "./pages/Home";
 
 function App() {
   return (
@@ -15,16 +16,8 @@ function App() {
 
         <main className="flex-grow p-4">
           <Routes>
-            <Route
-              path="/"
-              element={
-                <div>
-                  <h2 className="text-2xl">
-                    Welcome to the Animal Adoption App!
-                  </h2>
-                </div>
-              }
-            />
+            <Route path="/" element= {<Home />} />
+              
             <Route path="/about" element={<About />} />
             
             <Route path="/animals" element={<Animals/>} />

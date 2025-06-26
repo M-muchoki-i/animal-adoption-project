@@ -8,7 +8,9 @@ import Login from "./pages/Login";
 import User from "./pages/User";
 import Testimonials from "./pages/Testimonials"; 
 import Animals from "./pages/Animals";
+import AnimalForm from "./pages/AnimalForm";
 import Home from "./pages/Home";
+
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
             <Route path="/" element= {<Home />} />
               
             <Route path="/about" element={<About />} />
+            <Route path="/animal_form" element={<AnimalForm />} />
             
             <Route path="/animals" element={<Animals/>} />
 

@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import About from "./pages/About";
 import Testimonials from "./pages/Testimonials"; 
 import Animals from "./pages/Animals";
+import AnimalForm from "./pages/AnimalForm";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               }
             />
             <Route path="/about" element={<About />} />
+            <Route path="/animal_form" element={<AnimalForm />} />
             
             <Route path="/animals" element={<Animals/>} />
 

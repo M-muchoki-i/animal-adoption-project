@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-# from flask_cors import CORS
+from flask_cors import CORS
 from flask_restful import Api
 from models import db
 # from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
@@ -26,6 +26,7 @@ migrate=Migrate(app, db)
 api = Api(app)
     
 # CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
   
 
 api.add_resource(AnimalResource, '/animals', '/animals/<int:id>') 

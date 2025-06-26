@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import About from "./pages/About";
+import Login from "./pages/Login";
+import User from "./pages/User";
 import Testimonials from "./pages/Testimonials"; 
 
 function App() {
@@ -26,6 +28,8 @@ function App() {
             />
             <Route path="/about" element={<About />} />
             <Route path="/testimonials" element={<Testimonials />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/user" element={<User />} />
           </Routes>
         </main>
 

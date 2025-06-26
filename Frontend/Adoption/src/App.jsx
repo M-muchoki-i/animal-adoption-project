@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import About from "./pages/About";
 import Testimonials from "./pages/Testimonials"; 
+import Animals from "./pages/Animals";
 
 function App() {
   return (
@@ -25,6 +26,9 @@ function App() {
               }
             />
             <Route path="/about" element={<About />} />
+            
+            <Route path="/animals" element={<Animals/>} />
+
             <Route path="/testimonials" element={<Testimonials />} />
           </Routes>
         </main>

@@ -25,7 +25,8 @@ db.init_app(app)
 migrate=Migrate(app, db)
 api = Api(app)
     
-CORS(app)
+# CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
   
 
 api.add_resource(AnimalResource, '/animals', '/animals/<int:id>') 

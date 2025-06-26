@@ -7,6 +7,8 @@ import About from "./pages/About";
 import Login from "./pages/Login";
 import User from "./pages/User";
 import Testimonials from "./pages/Testimonials"; 
+import Animals from "./pages/Animals";
+import Home from "./pages/Home";
 
 function App() {
   return (
@@ -16,17 +18,12 @@ function App() {
 
         <main className="flex-grow p-4">
           <Routes>
-            <Route
-              path="/"
-              element={
-                <div>
-                  <h2 className="text-2xl">
-                    Welcome to the Animal Adoption App!
-                  </h2>
-                </div>
-              }
-            />
+            <Route path="/" element= {<Home />} />
+              
             <Route path="/about" element={<About />} />
+            
+            <Route path="/animals" element={<Animals/>} />
+
             <Route path="/testimonials" element={<Testimonials />} />
             <Route path="/login" element={<Login />} />
             <Route path="/user" element={<User />} />

@@ -14,8 +14,10 @@ function Animals() {
   return (
     <>
     
-      <section className="text-4xl font-serif mb-6 text-center">
-        <h1 > Our Fury Friends </h1>
+      <section >
+        <h2 className="text-4xl font-bold mb-6 text-green-700 text-center">
+        Our Fury Friends
+      </h2>
       </section>
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7 ml-10 ">
         {animal.map((animal) => (

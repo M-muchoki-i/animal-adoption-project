@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from sqlalchemy_serializer import SerializerMixin
-from datetime import datetime
+from datetime import datetime, timezone
 
 naming_convention = {
     "ix": "ix_%(column_0_label)s",  # indexing -> for better querying
@@ -55,12 +55,13 @@ class AdoptionRequest(db.Model, SerializerMixin):
     serialize_rules = ("-user.adoptionrequests", "-animal.adoptionrequests")
 
     id = db.Column(db.Integer, primary_key=True)
-    request_date = db.Column(db.DateTime, default=datetime.utcnow)
+    request_date = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     status = db.Column(db.String, default='pending', nullable=False)
     
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     animal_id = db.Column(db.Integer, db.ForeignKey('animal.id'))
-    created_at = db.Column(db.TIMESTAMP)
+    created_at = db.Column(db.DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
+
 
     user = db.relationship('User', back_populates='adoptionrequests')
     animal = db.relationship('Animal', back_populates='adoptionrequests')

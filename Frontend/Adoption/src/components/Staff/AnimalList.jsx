@@ -7,7 +7,7 @@ const AnimalList = () => {
 
   // Fetch animals from our backend
   useEffect(() => {
-    fetch("http://localhost:5000/animals")
+    fetch("http://localhost:5555/animals")
       .then((res) => res.json())
       .then((data) => setAnimals(data)); 
   }, []);

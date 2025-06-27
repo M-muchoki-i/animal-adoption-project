@@ -1,0 +1,33 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# pipenv files (ignore if managing env separately or using requirements.txt)
+Pipfile
+Pipfile.lock
+
+# Flask / local environment
+instance/
+adoption.db
+
+# Flask migration folder (if using Alembic)
+migrations/
+
+# VS Code and PyCharm settings
+.vscode/
+.idea/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Compiled object files
+*.o
+*.so
+
+# Ignore the entire resources/__pycache__ directory
+resources/__pycache__/

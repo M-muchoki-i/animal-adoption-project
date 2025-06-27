@@ -10,7 +10,7 @@ import Testimonials from "./pages/Testimonials";
 import Animals from "./pages/Animals";
 import AnimalForm from "./pages/AnimalForm";
 import Home from "./pages/Home";
-import Staff from "./components/staff/staff";
+import Staff from "./components/Staff/Staff";
 
 function App() {
   return (

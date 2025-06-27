@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { useAuth } from "../context/AuthContext"; // Import context for authentication
+import { useAuth } from "./AuthContext";
 import AnimalList from "./AnimalList"; // Import the AnimalList component
 
 const Staff = () => {

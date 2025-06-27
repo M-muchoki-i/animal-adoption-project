@@ -8,7 +8,9 @@ import Login from "./pages/Login";
 import User from "./pages/User";
 import Testimonials from "./pages/Testimonials"; 
 import Animals from "./pages/Animals";
+import AnimalForm from "./pages/AnimalForm";
 import Home from "./pages/Home";
+import Staff from "./components/staff/staff";
 
 function App() {
   return (
@@ -18,15 +20,17 @@ function App() {
 
         <main className="flex-grow p-4">
           <Routes>
-            <Route path="/" element= {<Home />} />
-              
+            <Route path="/" element={<Home />} />
+
             <Route path="/about" element={<About />} />
-            
-            <Route path="/animals" element={<Animals/>} />
+            <Route path="/animal_form" element={<AnimalForm />} />
+
+            <Route path="/animals" element={<Animals />} />
 
             <Route path="/testimonials" element={<Testimonials />} />
             <Route path="/login" element={<Login />} />
             <Route path="/user" element={<User />} />
+            <Route path="/staff" element={<Staff />} />
           </Routes>
         </main>
 

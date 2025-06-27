@@ -10,6 +10,7 @@ import Testimonials from "./pages/Testimonials";
 import Animals from "./pages/Animals";
 import AnimalForm from "./pages/AnimalForm";
 import Home from "./pages/Home";
+import AnimalDetails from "./pages/AnimalDetails";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
             <Route path="/animal_form" element={<AnimalForm />} />
             
             <Route path="/animals" element={<Animals/>} />
+            <Route path="/animals/:id" element={<AnimalDetails />} />"
 
             <Route path="/testimonials" element={<Testimonials />} />
             <Route path="/login" element={<Login />} />

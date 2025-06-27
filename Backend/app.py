@@ -25,7 +25,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 migrate=Migrate(app, db)
 api = Api(app)
-api.add_resource(AdoptionResource, "/adoptionrequest", "/adoptionrequest/<int:id>")
 # api.add_resource(AdoptionRequest, "/adoptionrequest")
 # api.add_resource(AdoptionRequest, "/adoptionrequest/<int:id>")
 # CORS(app)
@@ -35,7 +34,7 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 api.add_resource(AnimalResource, '/animals', '/animals/<int:id>') 
 api.add_resource(StaffResource, '/staffs', '/staffs/<int:id>') 
 api.add_resource(UserResources, '/users', '/users/<int:id>') 
-api.add_resource(AdoptionResource, '/adpotions', '/adoptions/<int:id>') 
+api.add_resource(AdoptionResource, '/adoptions', '/adoptions/<int:id>') 
 
 # Entry point for running directly
 if __name__ == '__main__':

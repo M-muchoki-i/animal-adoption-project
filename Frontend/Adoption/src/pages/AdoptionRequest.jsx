@@ -1,105 +1,107 @@
-import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { toast } from "react-toastify";
+import { useFormik } from "formik";
 import * as Yup from "yup";
-
-// Validation schema
-const validationSchema = Yup.object({
-  status: Yup.string().required("Status is required"),
-  user_id: Yup.number()
-    .typeError("Must be a number")
-    .required("User ID is required"),
-  animal_id: Yup.number()
-    .typeError("Must be a number")
-    .required("Animal ID is required"),
-});
+import { toast } from "react-toastify";
 
 const CreateAdoptionForm = () => {
-  const handleSubmit = async (values, { resetForm }) => {
-    try {
-      // Placeholder for backend API call
-      console.log("Form data submitted:", values);
-      toast.success("Form submitted successfully!");
-      resetForm();
-    } catch (error) {
-      toast.error("Failed to submit the form");
-    }
-  };
+  const formik = useFormik({
+    initialValues: {
+      status: "",
+      user_id: "",
+      animal_id: "",
+    },
+    validationSchema: Yup.object({
+      status: Yup.string().required("Status is required"),
+      user_id: Yup.number().required("User ID is required"),
+      animal_id: Yup.number().required("Animal ID is required"),
+    }),
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        const res = await fetch("http://127.0.0.1:5555/adoptions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          toast.success("🎉 Adoption request created!");
+          resetForm();
+        } else {
+          toast.error(`❌ Failed: ${data.message || "Unknown error"}`);
+        }
+      } catch (err) {
+        console.error(err);
+        toast.error("❌ Server error. Please try again.");
+      }
+    },
+  });
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-2xl shadow-lg">
-      <h2 className="text-2xl font-bold mb-6 text-center">
-        Create Adoption Record
+    <>
+      <h2 className="text-3xl text-green-600 font-serif font-bold text-center">
+        Adopt a puppy today
       </h2>
-      <Formik
-        initialValues={{ status: "", user_id: "", animal_id: "" }}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
+      <form
+        onSubmit={formik.handleSubmit}
+        className="max-w-md mx-auto bg-white p-6 shadow rounded-lg space-y-4"
       >
-        {() => (
-          <Form className="space-y-5">
-            {/* Status Field */}
-            <div>
-              <label htmlFor="status" className="block font-medium mb-1">
-                Status
-              </label>
-              <Field
-                name="status"
-                type="text"
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <ErrorMessage
-                name="status"
-                component="div"
-                className="text-red-500 text-sm"
-              />
-            </div>
+        <div>
+          <label className="block mb-1">Status</label>
+          <select
+            name="status"
+            value={formik.values.status}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className="w-full border px-2 py-1 rounded"
+          >
+            <option value="" disabled>
+              Select status
+            </option>
+            <option value="pending">Pending</option>
+            <option value="adopted">Adopted</option>
+          </select>
+          {formik.touched.status && formik.errors.status && (
+            <p className="text-red-500 text-sm">{formik.errors.status}</p>
+          )}
+        </div>
+        <div>
+          <label>User ID</label>
+          <input
+            name="user_id"
+            type="number"
+            value={formik.values.user_id}
+            onChange={formik.handleChange}
+            className="w-full border px-2 py-1 rounded"
+          />
+          {formik.touched.user_id && formik.errors.user_id && (
+            <p className="text-red-500 text-sm">{formik.errors.user_id}</p>
+          )}
+        </div>
+        <div>
+          <label>Animal ID</label>
+          <input
+            name="animal_id"
+            type="number"
+            value={formik.values.animal_id}
+            onChange={formik.handleChange}
+            className="w-full border px-2 py-1 rounded"
+          />
+          {formik.touched.animal_id && formik.errors.animal_id && (
+            <p className="text-red-500 text-sm">{formik.errors.animal_id}</p>
+          )}
+        </div>
 
-            {/* User ID Field */}
-            <div>
-              <label htmlFor="user_id" className="block font-medium mb-1">
-                User ID
-              </label>
-              <Field
-                name="user_id"
-                type="number"
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <ErrorMessage
-                name="user_id"
-                component="div"
-                className="text-red-500 text-sm"
-              />
-            </div>
-
-            {/* Animal ID Field */}
-            <div>
-              <label htmlFor="animal_id" className="block font-medium mb-1">
-                Animal ID
-              </label>
-              <Field
-                name="animal_id"
-                type="number"
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <ErrorMessage
-                name="animal_id"
-                component="div"
-                className="text-red-500 text-sm"
-              />
-            </div>
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
-            >
-              Submit
-            </button>
-          </Form>
-        )}
-      </Formik>
-    </div>
+        <button
+          type="submit"
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        >
+          Submit
+        </button>
+      </form>
+    </>
   );
 };
 

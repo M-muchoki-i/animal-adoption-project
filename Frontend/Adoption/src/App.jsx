@@ -11,7 +11,7 @@ import Animals from "./pages/Animals";
 import AnimalForm from "./pages/AnimalForm";
 import Home from "./pages/Home";
 import AnimalDetails from "./pages/AnimalDetails";
-
+import Staff from "./components/Staff/Staff";
 
 function App() {
   return (
@@ -21,17 +21,20 @@ function App() {
 
         <main className="flex-grow p-4">
           <Routes>
-            <Route path="/" element= {<Home />} />
-              
+            <Route path="/" element={<Home />} />
+
             <Route path="/about" element={<About />} />
             <Route path="/animal_form" element={<AnimalForm />} />
             
             <Route path="/animals" element={<Animals/>} />
-            <Route path="/animals/:id" element={<AnimalDetails />} />"
+            <Route path="/animals/:id" element={<AnimalDetails />} />
+
+            <Route path="/animals" element={<Animals />} />
 
             <Route path="/testimonials" element={<Testimonials />} />
             <Route path="/login" element={<Login />} />
             <Route path="/user" element={<User />} />
+            <Route path="/staff" element={<Staff />} />
           </Routes>
         </main>
 

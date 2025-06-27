@@ -1,6 +1,7 @@
 // src/App.jsx
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./components/Staff/AuthContext";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import About from "./pages/About";
@@ -12,8 +13,11 @@ import AnimalForm from "./pages/AnimalForm";
 import Home from "./pages/Home";
 import Staff from "./components/Staff/Staff";
 
+
+
 function App() {
   return (
+    <AuthProvider>
     <Router>
       <div className="flex flex-col min-h-screen">
         <Header />
@@ -36,7 +40,8 @@ function App() {
 
         <Footer />
       </div>
-    </Router>
+      </Router>
+      </AuthProvider>
   );
 }
 

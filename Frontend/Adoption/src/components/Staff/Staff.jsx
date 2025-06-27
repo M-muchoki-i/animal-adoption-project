@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import AnimalList from "./AnimalList"; // Import the AnimalList component
 
@@ -8,7 +8,7 @@ const Staff = () => {
 
   // Check if user is authenticated and has the 'staff' role
   if (!user || user.role !== "staff") {
-    return <Redirect to="/" />; // Redirect to home if unauthorized
+    return <Navigate to="/" />; // Redirect to home if unauthorized
   }
 
   return (

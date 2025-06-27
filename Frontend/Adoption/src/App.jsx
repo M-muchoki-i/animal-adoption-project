@@ -12,9 +12,13 @@ import Animals from "./pages/Animals";
 import AnimalForm from "./pages/AnimalForm";
 import Adopt from "./pages/AdoptionRequest"
 import Home from "./pages/Home";
+
+import AnimalDetails from "./pages/AnimalDetails";
+
 import Staff from "./components/staff/staff";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 
 import Staff from "./components/Staff/Staff";
 
@@ -44,6 +48,9 @@ function App() {
 
             <Route path="/about" element={<About />} />
             <Route path="/animal_form" element={<AnimalForm />} />
+            
+            <Route path="/animals" element={<Animals/>} />
+            <Route path="/animals/:id" element={<AnimalDetails />} />
 
             <Route path="/animals" element={<Animals />} />
 

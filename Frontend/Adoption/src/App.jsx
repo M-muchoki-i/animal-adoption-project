@@ -9,18 +9,31 @@ import User from "./pages/User";
 import Testimonials from "./pages/Testimonials"; 
 import Animals from "./pages/Animals";
 import AnimalForm from "./pages/AnimalForm";
+import Adopt from "./pages/AdoptionRequest"
 import Home from "./pages/Home";
 import Staff from "./components/staff/staff";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
     <Router>
+       <ToastContainer 
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        pauseOnHover
+        draggable
+      />
       <div className="flex flex-col min-h-screen">
         <Header />
 
         <main className="flex-grow p-4">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/" element={<div>Home Route Working!</div>} />
 
             <Route path="/about" element={<About />} />
             <Route path="/animal_form" element={<AnimalForm />} />
@@ -31,6 +44,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/user" element={<User />} />
             <Route path="/staff" element={<Staff />} />
+            <Route path="/adopt" element={<Adopt />} />
           </Routes>
         </main>
 

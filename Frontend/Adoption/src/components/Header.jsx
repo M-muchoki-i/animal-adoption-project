@@ -18,8 +18,8 @@ const Header = () => {
           <Link to="/animals">Animals</Link>
           <Link to="/adopt">Adopt</Link>
           <Link to="/donate">Donate</Link>
-          <Link to="/users">Users</Link>
-                  <Link to="/login">Login</Link>
+          <Link to="/user">User</Link>
+          <Link to="/login">Login</Link>
           <Link to="/testimonials">Testimonials</Link>
         </nav>
       </div>

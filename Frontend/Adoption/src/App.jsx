@@ -15,7 +15,6 @@ import Home from "./pages/Home";
 
 import AnimalDetails from "./pages/AnimalDetails";
 
-import Staff from "./components/staff/staff";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

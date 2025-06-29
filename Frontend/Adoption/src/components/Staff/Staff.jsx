@@ -14,12 +14,13 @@ const Staff = () => {
   }
 
   return (
-    <div>
-      <h1 className="text-4xl font-bold mb-6 text-center">Staff Dashboard</h1>
+    <div className="p-6 bg-gray-50 min-h-screen">
+      <h1 className="text-4xl font-bold mb-6 text-center text-blue-700">Staff Dashboard</h1>
+      <div className="bg-white rounded-lg shadow-md p-6">
       <AnimalList />{" "}
       <CreateAdoptionForm/> {""}
       <User/>
-
+      </div>
     </div>
   );
 };

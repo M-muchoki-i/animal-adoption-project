@@ -63,7 +63,10 @@ const AnimalList = () => {
       </form>
       <h2 className="text-4xl font-bold mb-6 text-green-700 text-center">Our Furry Friends</h2>
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7">
-        {animals.map((animal) => (
+      {animals.length === 0 ? (
+          <p className="text-center text-gray-500 col-span-full">No animals found.</p>
+        ) : (
+        animals.map((animal) => (
           <div key={animal.id} className="flex flex-col items-center">
           <Link to={`/animals/${animal.id}`}>
             <div className="rounded-xl shadow-md overflow-hidden hover:shadow-xl transform transition duration-300 w-72">
@@ -85,7 +88,8 @@ const AnimalList = () => {
           Delete
         </button>
       </div>
-    ))}
+        ))
+    )}
       </section>
     </div>
   );

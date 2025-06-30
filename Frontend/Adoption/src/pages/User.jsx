@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import{ useState } from "react";
 
 const API_BASE_URL = "http://127.0.0.1:5000";
 
@@ -11,8 +11,7 @@ function User() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    // it for showing that there is no message to display either a succeffull or an error message
-    setMessage(null);  
+    setMessage(null);
 
     try {
       const res = await fetch(`${API_BASE_URL}/users`, {
@@ -44,63 +43,71 @@ function User() {
       setMessage({ type: "error", text: "Network error" });
     }
   };
+
   return (
-    <>
-      <div className="max-w-md mx-auto p-6 bg-white rounded shadow">
-        <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+      <div className="max-w-md w-full p-10 bg-white rounded-xl shadow-xl space-y-6">
+        <h2 className="text-3xl font-bold text-center text-green-700">Sign Up</h2>
+
         {message && (
           <div
-            className={`mb-4 p-3 rounded ${
+            className={`p-3 rounded text-center font-medium ${
               message.type === "error"
-                ? "bg-red-200 text-red-800"
-                : "bg-green-200 text-green-800"
+                ? "bg-red-100 text-red-700"
+                : "bg-green-100 text-green-700"
             }`}
           >
             {message.text}
           </div>
         )}
+
         <form onSubmit={handleSignup} className="space-y-4">
           <input
             type="text"
             placeholder="Name"
-            className="w-full p-3 border rounded"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
           />
+
           <input
             type="email"
             placeholder="Email"
-            className="w-full p-3 border rounded"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
           />
+
           <input
             type="password"
             placeholder="Password"
-            className="w-full p-3 border rounded"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
           />
+
           <input
             type="text"
             placeholder="Contact Info"
-            className="w-full p-3 border rounded"
             value={contactInfo}
             onChange={(e) => setContactInfo(e.target.value)}
             required
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
           />
+
           <button
             type="submit"
-            className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded"
+            className="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition duration-200"
           >
             Sign Up
           </button>
         </form>
       </div>
-    </>
+    </div>
   );
 }
+
 export default User;

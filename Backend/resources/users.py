@@ -54,10 +54,6 @@ class UserResources(Resource):
                 email=data["email"],
                 password = hash,
                 contact_info=data["contact_info"]
-                password=data.get("password"),
-                contact_info=data["contact_info"],
-                role=data.get("role", "user"),
-
             )
             db.session.add(new_user)
             db.session.commit()

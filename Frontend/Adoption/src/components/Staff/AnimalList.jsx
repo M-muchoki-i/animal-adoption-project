@@ -53,7 +53,7 @@ const AnimalList = () => {
     <div className= "p-6 bg-gray-100 rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-4">Manage Animals</h2>
       {/* // <form onSubmit={handleSubmit(onSubmit)} className="mb-4"> */}
-      //   {/* Form fields for animal data */}
+      {/* //   Form fields for animal data */}
       {/* //   <input {...register("name")}  */}
       {/* //   placeholder="Name" 
       //   className="p-2 border border-gray-300 rounded mr-2" /> */}

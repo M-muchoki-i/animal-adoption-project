@@ -1,7 +1,4 @@
-// import { useState } from "react";
-import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../components/AuthContext";
+import{ useState } from "react";
 
 const API_BASE_URL = "http://127.0.0.1:5000";
 
@@ -11,8 +8,6 @@ function User() {
   const [password, setPassword] = useState("");
   const [contactInfo, setContactInfo] = useState("");
   const [message, setMessage] = useState(null);
-  const { setUser } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -33,12 +28,10 @@ function User() {
       const data = await res.json();
 
       if (res.ok) {
-        setUser(data);
         setMessage({
           type: "success",
-          text: "Signup successful!",
+          text: "Signup successful! Please login.",
         });
-        // navigate("/login");
         setName("");
         setEmail("");
         setPassword("");
@@ -54,9 +47,7 @@ function User() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="max-w-md w-full p-10 bg-white rounded-xl shadow-xl space-y-6">
-        <h2 className="text-3xl font-bold text-center text-green-700">
-          Sign Up
-        </h2>
+        <h2 className="text-3xl font-bold text-center text-green-700">Sign Up</h2>
 
         {message && (
           <div

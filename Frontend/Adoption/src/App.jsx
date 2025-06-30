@@ -14,9 +14,9 @@ import Adopt from "./pages/AdoptionRequest"
 import Home from "./pages/Home";
 
 import AnimalDetails from "./pages/AnimalDetails";
-
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 
 
 import Staff from "./components/Staff/Staff";
@@ -28,7 +28,7 @@ function App() {
   return (
     <AuthProvider>
     <Router>
-       <ToastContainer 
+       {/* <ToastContainer 
         position="top-right"
         autoClose={3000}
         hideProgressBar={false}
@@ -36,7 +36,7 @@ function App() {
         closeOnClick
         pauseOnHover
         draggable
-      />
+      /> */}
       <div className="flex flex-col min-h-screen">
         <Header />
 
@@ -57,7 +57,9 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/user" element={<User />} />
             <Route path="/staff" element={<Staff />} />
+            <Route path="/adopt/:id" element={<Adopt />} />
             <Route path="/adopt" element={<Adopt />} />
+
           </Routes>
         </main>
 

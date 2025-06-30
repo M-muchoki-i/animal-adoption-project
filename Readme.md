@@ -41,3 +41,12 @@ Notifications: React Toastify
 
 Image Handling: Preview before upload
 
+👥 Contributors
+Robert Haji
+David Kiptum 
+Raphael Kihiro
+Jerald Nyaga
+Mitchelle Muchoki
+
+
+

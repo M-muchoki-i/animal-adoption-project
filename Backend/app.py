@@ -11,9 +11,10 @@ from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
 from dotenv import load_dotenv
 from resources.animal import AnimalResource
-from resources.staffs import StaffResource
+# from resources.staffs import StaffResource
 from resources.users import UserResources, LoginResource
 from resources.adoptionrequests import AdoptionResource
+from resources.staffSignup import StaffSignupResource
 
 
 load_dotenv()
@@ -41,10 +42,12 @@ CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5173"}})
   
 
 api.add_resource(AnimalResource, '/animals', '/animals/<int:id>') 
-api.add_resource(StaffResource, '/staffs', '/staffs/<int:id>') 
+# api.add_resource(StaffResource, '/staffs', '/staffs/<int:id>') 
 api.add_resource(UserResources, '/users', '/users/<int:id>') 
 api.add_resource(AdoptionResource, '/adoptions', '/adoptions/<int:id>') 
 api.add_resource(LoginResource, '/login') 
+api.add_resource(StaffSignupResource, "/staff/signup")
+
 
 # Entry point for running directly
 if __name__ == '__main__':

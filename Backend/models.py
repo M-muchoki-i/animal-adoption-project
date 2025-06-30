@@ -31,6 +31,9 @@ class User(db.Model, SerializerMixin):
     contact_info = db.Column(db.String, unique=True, nullable=False)
     created_at = db.Column(db.TIMESTAMP)
 
+    # Add role on our database
+    role = db.Column(db.String, default="user") 
+
     adoptionrequests = db.relationship('AdoptionRequest', back_populates='user', cascade='all, delete')
 
 class Animal(db.Model, SerializerMixin):

@@ -1,5 +1,6 @@
 from flask import request
 from flask_restful import Resource, reqparse
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from models import Animal, db
 
 class AnimalResource(Resource):
@@ -24,7 +25,12 @@ class AnimalResource(Resource):
                 return animal.to_dict(), 201
             return {"error": "Animal not found"}, 404
         
+    @jwt_required()    
     def post(self):
+        user = get_jwt_identity()
+        
+        if not user.get("is_staff"):
+            return {"error": "Only staff can add animals."}, 403
         data = self.parser.parse_args()
         animals = Animal(**data)
 
@@ -61,11 +67,19 @@ class AnimalResource(Resource):
         db.session.commit()
 
         return {"message": "Update is successful"}, 201
+    
+    @jwt_required()
     def delete(self, id):
+        user = get_jwt_identity() 
+
+        if not user.get("is_staff"):
+            return {"error": "Only staff can delete animals."}, 403
+         
         animal = Animal.query.filter_by(id=id).first()
+    
         if animal is None:
             return {"message":"Animal delete successfully"}, 404
 
         db.session.delete(animal)
         db.session.commit()
-        return {"message": "Deleted successfully"}, 201
+        return {"message": "Deleted successfully"}, 200

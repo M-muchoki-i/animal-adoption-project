@@ -1,14 +1,28 @@
-from flask import request
+from flask import request, session
 from flask_restful import Resource, reqparse
-from models import User, db
+from flask_bcrypt import generate_password_hash, check_password_hash
+from flask_jwt_extended import create_access_token
+from models import User,Staff, db
 
 
 class UserResources(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument("name", type=str, required=True, help="Name is required")
     parser.add_argument("email", type=str, required=True, help="Email is required")
-    parser.add_argument("password", type=str, required=False)
+    parser.add_argument("password", type=str, required=True)
     parser.add_argument("contact_info", type=str, required=True, help="Contact_info is required")
+    # Add role to update the Post method to allow an admin to specify roles and add a check for admin privileges.
+    parser.add_argument(
+        "role",
+        type=str,
+        choices=["user", "staff", "admin"],
+        help="Role must be user, staff, or admin",
+    )
+
+    def is_admin(self):
+        # Check if the user is an admin
+        return session.get("user_role") == "admin"
+
 
     def get(self, id=None):
         if id is None:
@@ -21,29 +35,41 @@ class UserResources(Resource):
         return user.to_dict(), 200
     
     def post(self):
+        if not self.is_admin():
+            return {"error": "Unauthorized"}, 403
         data = UserResources.parser.parse_args()
         try:
             # Check for uniqueness
             if User.query.filter_by(email=data["email"]).first():
-                return {"error": "Email already exists"}, 409
+                return {"error": "Email already exists"}, 422
             if User.query.filter_by(contact_info=data["contact_info"]).first():
                 return {"error": "Contact info already exists"}, 409
+            
+            hash = generate_password_hash(data['password']).decode('utf-8')
+            
+
 
             new_user = User(
                 name=data["name"],
                 email=data["email"],
-                password=data.get("password"),
+                password = hash,
                 contact_info=data["contact_info"]
+                password=data.get("password"),
+                contact_info=data["contact_info"],
+                role=data.get("role", "user"),
+
             )
             db.session.add(new_user)
             db.session.commit()
 
             return new_user.to_dict(), 201
-        except Exception:
+        except Exception as e:
             db.session.rollback()
-            return {"message": ["User added successfully"]}, 200
+            return {"error": str(e)}, 500
         
     def patch(self, id):
+        if not self.is_admin():
+            return {"error": "Unauthorized"}, 403
         user = User.query.filter_by(id=id).first()
         if not user:
             return {"error": "User not found"}, 404
@@ -53,8 +79,8 @@ class UserResources(Resource):
         try:
             user.name = data.get("name", user.name)
             user.email = data.get("email", user.email)
-            user.password = data.get("password", user.password)
             user.contact_info = data.get("contact_info", user.contact_info)
+            user.role = data.get("role", user.role)
 
             db.session.commit()
             return user.to_dict(), 200
@@ -66,6 +92,8 @@ class UserResources(Resource):
 
       
     def delete(self, id):
+        if not self.is_admin():
+            return {"error": "Unauthorized"}, 403
         user = User.query.filter_by(id=id).first()  # Fetch the user member by ID
         if user is None:
             return {
@@ -78,3 +106,33 @@ class UserResources(Resource):
 
         return {"message": "User deleted successfully"}, 202  # No content
 
+class LoginResource(Resource):
+    def post(self):
+        data = request.get_json()
+        email = data.get("email")
+        password = data.get("password")
+
+        if not email or not password:
+            return {"error": "Email and password are required"}, 400
+
+        # Try to log in as a regular user
+        user = User.query.filter_by(email=email).first()
+        if user and check_password_hash(user.password, password):
+            token = create_access_token(identity={
+                "id": user.id,
+                "name": user.name,
+                "is_staff": False
+            })
+            return {"access_token": token}, 200
+
+        # Try to log in as a staff member
+        staff = Staff.query.filter_by(email=email).first()
+        if staff and check_password_hash(staff.password, password):
+            token = create_access_token(identity={
+                "id": staff.id,
+                "name": staff.name,
+                "is_staff": True
+            })
+            return {"access_token": token}, 200
+
+        return {"error": "Invalid credentials"}, 401

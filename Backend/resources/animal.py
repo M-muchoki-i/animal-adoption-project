@@ -82,4 +82,4 @@ class AnimalResource(Resource):
 
         db.session.delete(animal)
         db.session.commit()
-        return {"message": "Deleted successfully"}, 201
+        return {"message": "Deleted successfully"}, 200

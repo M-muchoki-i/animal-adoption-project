@@ -16,11 +16,11 @@ const Header = () => {
         </h1>
 
         <nav className="space-x-4">
-          <Link to="/">Home</Link>
+          {/* <Link to="/">Home</Link> */}
 
           {!user ? (
             <>
-              {/* <Link to="/login">Login</Link> */}
+              <Link to="/login">Login</Link>
               <Link to="/signup">Signup</Link>
             </>
           ) : (

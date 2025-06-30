@@ -23,3 +23,21 @@ A simple React frontend that supports:
  File Upload for Animal Images
  Responsive UI
  Toast Notifications
+
+
+
+🛠️ Tech Stack
+Frontend Framework: React
+
+Routing: React Router DOM
+
+Authentication: JWT 
+
+HTTP Client: Fetch API / Axios
+
+Styling: Tailwind CSS 
+
+Notifications: React Toastify
+
+Image Handling: Preview before upload
+

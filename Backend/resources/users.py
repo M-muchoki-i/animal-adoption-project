@@ -11,6 +11,8 @@ class UserResources(Resource):
     parser.add_argument("email", type=str, required=True, help="Email is required")
     parser.add_argument("password", type=str, required=True)
     parser.add_argument("contact_info", type=str, required=True, help="Contact_info is required")
+    
+
 
     def get(self, id=None):
         if id is None:

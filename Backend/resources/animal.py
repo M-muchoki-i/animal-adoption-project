@@ -29,7 +29,7 @@ class AnimalResource(Resource):
     def post(self):
         user = get_jwt_identity()
         
-        if not user.get("is_staff"):
+        if user ["role"]!="staff":
             return {"error": "Only staff can add animals."}, 403
         data = self.parser.parse_args()
         animals = Animal(**data)
@@ -38,8 +38,12 @@ class AnimalResource(Resource):
         db.session.commit()
         return {"message": "Animal created successfully"}, 201
     
-
+    @jwt_required()
     def patch(self, id):
+        user = get_jwt_identity() 
+        if user["role"] != "staff":
+            return {"error": "Only staff can update animals."}, 403
+
         animal = Animal.query.filter_by(id=id).first()
         if not animal:
             return {"message": "Animal not found"}, 404
@@ -72,13 +76,13 @@ class AnimalResource(Resource):
     def delete(self, id):
         user = get_jwt_identity() 
 
-        if not user.get("is_staff"):
+        if user["role"]!="staff":
             return {"error": "Only staff can delete animals."}, 403
          
         animal = Animal.query.filter_by(id=id).first()
     
         if animal is None:
-            return {"message":"Animal delete successfully"}, 404
+            return {"message":"Animal not found "}, 404
 
         db.session.delete(animal)
         db.session.commit()

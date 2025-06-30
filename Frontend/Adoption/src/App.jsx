@@ -1,7 +1,12 @@
 // src/App.jsx
 import React from "react";
+import { AuthProvider } from "./components/AuthContext";
+import Staff from "./components/Staff/Staff";
+
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import { AuthProvider } from "./components/Staff/AuthContext";
+
+
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import About from "./pages/About";
@@ -20,19 +25,18 @@ import StaffSignupForm from "./components/Staff/StaffSignupForm";
 
 
 
-import Staff from "./components/Staff/Staff";
+// import Staff from "./components/Staff/Staff";
 // import { ToastContainer } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
 
 
-// import Staff from "./components/Staff/Staff";
 
 
 
 
 function App() {
   return (
-    
+    <AuthProvider>
       <Router>
         {/* <ToastContainer 
         position="top-right"
@@ -49,13 +53,12 @@ function App() {
           <main className="flex-grow p-4">
             <Routes>
               {/* Public Routes */}
-              <Route path="/" element={<Home />} />
+              {/* <Route path="/" element={<Home />} /> */}
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<User />} />
               <Route path="/staff/signup" element={<StaffSignupForm />} />
 
 
-           
               {/*  Protected Routes */}
               <Route
                 path="/about"
@@ -143,7 +146,7 @@ function App() {
           <Footer />
         </div>
       </Router>
-    
+    </AuthProvider>
   );
 }
 

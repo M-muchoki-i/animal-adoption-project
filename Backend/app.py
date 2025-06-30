@@ -23,6 +23,7 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///adoption.db'  # or PostgreSQL/MySQL URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config["SQLALCHEMY_ECHO"] = True
 # Setup the Flask-JWT-Extended extension
 
 app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET")  # Change this!
@@ -37,7 +38,7 @@ api = Api(app)
 # api.add_resource(AdoptionRequest, "/adoptionrequest")
 # api.add_resource(AdoptionRequest, "/adoptionrequest/<int:id>")
 # CORS(app)
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5173"}})
   
 
 api.add_resource(AnimalResource, '/animals', '/animals/<int:id>') 

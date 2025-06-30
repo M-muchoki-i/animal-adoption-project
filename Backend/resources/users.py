@@ -2,7 +2,7 @@ from flask import request
 from flask_restful import Resource, reqparse
 from flask_bcrypt import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token
-from models import User,Staff, db
+from models import User, db
 
 
 class UserResources(Resource):
@@ -10,6 +10,7 @@ class UserResources(Resource):
     parser.add_argument("name", type=str, required=True, help="Name is required")
     parser.add_argument("email", type=str, required=True, help="Email is required")
     parser.add_argument("password", type=str, required=True)
+    parser.add_argument("role", type=str, required=True)
     parser.add_argument("contact_info", type=str, required=True, help="Contact_info is required")
     
 
@@ -41,13 +42,8 @@ class UserResources(Resource):
                 name=data["name"],
                 email=data["email"],
                 password = hash,
+                role=data["role"],
                 contact_info=data["contact_info"]
-
-                # password=data.get("password"),
-                # contact_info=data["contact_info"],
-                # role=data.get("role", "user"),
-
-
             )
             db.session.add(new_user)
             db.session.commit()
@@ -102,26 +98,16 @@ class LoginResource(Resource):
         if not email or not password:
             return {"error": "Email and password are required"}, 400
 
-        # Try to log in as a regular user
         user = User.query.filter_by(email=email).first()
+
         if user and check_password_hash(user.password, password):
-            token = create_access_token(identity={
-                "id": user.id,
-                "name": user.name,
-                "is_staff": False
-            })
-            return {"access_token": token}, 200
+             token = create_access_token(identity={"id": user.id, "name": user.name, "role": user.role})
 
-        # Try to log in as a staff member
-        staff = Staff.query.filter_by(email=email).first()
-        if staff and check_password_hash(staff.password, password):
-            token = create_access_token(identity={
-                "id": staff.id,
-                "name": staff.name,
-                "is_staff": True
-            })
-            return {"access_token": token}, 200
-
-        return {"error": "Invalid credentials"}, 401
-
+             return {
+               "message": "Login successful",
+               "access_token": token,
+                "user":user.to_dict()
+                    }, 200
+    
+        return {"error":"Invalid email or password"}
 

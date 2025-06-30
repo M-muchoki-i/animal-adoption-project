@@ -1,4 +1,5 @@
 from flask import request
+from flask import current_app as app
 from flask_restful import Resource, reqparse
 from flask_bcrypt import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token
@@ -93,33 +94,37 @@ class UserResources(Resource):
 
 class LoginResource(Resource):
     def post(self):
-        data = request.get_json()
-        email = data.get("email")
-        password = data.get("password")
+        try:
+            data = request.get_json()
+            if not data:
+                return {"error": "Missing JSON in request"}, 400
 
-        if not email or not password:
-            return {"error": "Email and password are required"}, 400
+            email = data.get("email")
+            password = data.get("password")
 
-        # Try to log in as a regular user
-        user = User.query.filter_by(email=email).first()
-        if user and check_password_hash(user.password, password):
-            token = create_access_token(identity={
-                "id": user.id,
-                "name": user.name,
-                "is_staff": False
-            })
-            return {"access_token": token}, 200
+            if not email or not password:
+                return {"error": "Email and password are required"}, 400
 
-        # Try to log in as a staff member
-        staff = Staff.query.filter_by(email=email).first()
-        if staff and check_password_hash(staff.password, password):
-            token = create_access_token(identity={
-                "id": staff.id,
-                "name": staff.name,
-                "is_staff": True
-            })
-            return {"access_token": token}, 200
+            user = User.query.filter_by(email=email).first()
+            if user and check_password_hash(user.password, password):
+                token = create_access_token(identity={
+                    "id": user.id,
+                    "name": user.name,
+                    "is_staff": False
+                })
+                return {"access_token": token}, 200
 
-        return {"error": "Invalid credentials"}, 401
+            staff = Staff.query.filter_by(email=email).first()
+            if staff and check_password_hash(staff.password, password):
+                token = create_access_token(identity={
+                    "id": staff.id,
+                    "name": staff.name,
+                    "is_staff": True
+                })
+                return {"access_token": token}, 200
 
+            return {"error": "Invalid credentials"}, 401
 
+        except Exception as e:
+            app.logger.error(f"Login error: {e}")
+            return {"error": "Internal server error"}, 500

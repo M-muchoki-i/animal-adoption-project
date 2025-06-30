@@ -1,7 +1,7 @@
 // src/App.jsx
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./components/Staff/AuthContext";
+// import { AuthProvider } from "./components/Staff/AuthContext";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import About from "./pages/About";
@@ -15,6 +15,7 @@ import Home from "./pages/Home";
 import AnimalDetails from "./pages/AnimalDetails";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 
 
@@ -30,9 +31,9 @@ import Staff from "./components/Staff/Staff";
 
 function App() {
   return (
-    <AuthProvider>
-    <Router>
-       {/* <ToastContainer 
+    
+      <Router>
+        {/* <ToastContainer 
         position="top-right"
         autoClose={3000}
         hideProgressBar={false}
@@ -41,36 +42,105 @@ function App() {
         pauseOnHover
         draggable
       /> */}
-      <div className="flex flex-col min-h-screen">
-        <Header />
+        <div className="flex flex-col min-h-screen">
+          <Header />
 
           <main className="flex-grow p-4">
             <Routes>
+              {/* Public Routes */}
               <Route path="/" element={<Home />} />
-              <Route path="/" element={<div>Home Route Working!</div>} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<User />} />
 
-              <Route path="/about" element={<About />} />
-              <Route path="/animal_form" element={<AnimalForm />} />
-
-              <Route path="/animals" element={<Animals />} />
-              <Route path="/animals/:id" element={<AnimalDetails />} />
-
-              <Route path="/animals" element={<Animals />} />
-
-            <Route path="/testimonials" element={<Testimonials />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/user" element={<User />} />
-            <Route path="/staff" element={<Staff />} />
-            <Route path="/adopt/:id" element={<Adopt />} />
-            <Route path="/adopt" element={<Adopt />} />
-
-          </Routes>
-        </main>
+           
+              {/*  Protected Routes */}
+              <Route
+                path="/about"
+                element={
+                  <ProtectedRoute>
+                    <About />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/animal_form"
+                element={
+                  <ProtectedRoute>
+                    <AnimalForm />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/animals"
+                element={
+                  <ProtectedRoute>
+                    <Animals />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/animals/:id"
+                element={
+                  <ProtectedRoute>
+                    <AnimalDetails />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/testimonials"
+                element={
+                  <ProtectedRoute>
+                    <Testimonials />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/staff"
+                element={
+                  <ProtectedRoute>
+                    <Staff />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/adopt"
+                element={
+                  <ProtectedRoute>
+                    <Adopt />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/adopt/:id"
+                element={
+                  <ProtectedRoute>
+                    <Adopt />
+                  </ProtectedRoute>
+                }
+              />
+              {/* <Route
+                path="/donate"
+                element={
+                  <ProtectedRoute>
+                    <Donate />
+                  </ProtectedRoute>
+                }
+              /> */}
+              <Route
+                path="/user"
+                element={
+                  <ProtectedRoute>
+                    <User />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </main>
 
           <Footer />
         </div>
       </Router>
-    </AuthProvider>
+    
   );
 }
 

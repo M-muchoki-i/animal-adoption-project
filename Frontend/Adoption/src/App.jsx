@@ -16,6 +16,7 @@ import AnimalDetails from "./pages/AnimalDetails";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProtectedRoute from "./components/ProtectedRoute";
+import StaffSignupForm from "./components/Staff/StaffSignupForm";
 
 
 
@@ -51,6 +52,8 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<User />} />
+              <Route path="/staff/signup" element={<StaffSignupForm />} />
+
 
            
               {/*  Protected Routes */}

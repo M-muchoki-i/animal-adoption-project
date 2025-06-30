@@ -1,13 +1,15 @@
 from flask import request
 from flask_restful import Resource, reqparse
-from models import User, db
+from flask_bcrypt import generate_password_hash, check_password_hash
+from flask_jwt_extended import create_access_token
+from models import User,Staff, db
 
 
 class UserResources(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument("name", type=str, required=True, help="Name is required")
     parser.add_argument("email", type=str, required=True, help="Email is required")
-    parser.add_argument("password", type=str, required=False)
+    parser.add_argument("password", type=str, required=True)
     parser.add_argument("contact_info", type=str, required=True, help="Contact_info is required")
 
     def get(self, id=None):
@@ -25,14 +27,18 @@ class UserResources(Resource):
         try:
             # Check for uniqueness
             if User.query.filter_by(email=data["email"]).first():
-                return {"error": "Email already exists"}, 409
+                return {"error": "Email already exists"}, 422
             if User.query.filter_by(contact_info=data["contact_info"]).first():
                 return {"error": "Contact info already exists"}, 409
+            
+            hash = generate_password_hash(data['password']).decode('utf-8')
+            
+
 
             new_user = User(
                 name=data["name"],
                 email=data["email"],
-                password=data.get("password"),
+                password = hash,
                 contact_info=data["contact_info"]
             )
             db.session.add(new_user)
@@ -53,7 +59,6 @@ class UserResources(Resource):
         try:
             user.name = data.get("name", user.name)
             user.email = data.get("email", user.email)
-            user.password = data.get("password", user.password)
             user.contact_info = data.get("contact_info", user.contact_info)
 
             db.session.commit()
@@ -78,3 +83,33 @@ class UserResources(Resource):
 
         return {"message": "User deleted successfully"}, 202  # No content
 
+class LoginResource(Resource):
+    def post(self):
+        data = request.get_json()
+        email = data.get("email")
+        password = data.get("password")
+
+        if not email or not password:
+            return {"error": "Email and password are required"}, 400
+
+        # Try to log in as a regular user
+        user = User.query.filter_by(email=email).first()
+        if user and check_password_hash(user.password, password):
+            token = create_access_token(identity={
+                "id": user.id,
+                "name": user.name,
+                "is_staff": False
+            })
+            return {"access_token": token}, 200
+
+        # Try to log in as a staff member
+        staff = Staff.query.filter_by(email=email).first()
+        if staff and check_password_hash(staff.password, password):
+            token = create_access_token(identity={
+                "id": staff.id,
+                "name": staff.name,
+                "is_staff": True
+            })
+            return {"access_token": token}, 200
+
+        return {"error": "Invalid credentials"}, 401

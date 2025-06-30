@@ -2,14 +2,14 @@ import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 
-function AnimalForm() {
-  const [animals, setAnimals] = useState([]);
+function AnimalForm({onAnimalAdded}) {
+  // const [animals, setAnimals] = useState([]);
 
-  useEffect(() => {
-    fetch("http://localhost:5000/animals")
-      .then((res) => res.json())
-      .then((data) => setAnimals(data));
-  }, []);
+  // useEffect(() => {
+  //   fetch("http://localhost:5000/animals")
+  //     .then((res) => res.json())
+  //     .then((data) => setAnimals(data));
+  // }, []);
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
       name: "",
@@ -33,7 +33,15 @@ function AnimalForm() {
     })
       .then((res) => res.json())
       .then((data) => {
+        toast.success("Animal added successfully");
         reset();
+        if (onAnimalAdded){
+          onAnimalAdded(); //Refreshes the animal list
+        }
+      })
+      .catch((err) => {
+        toast.error("Failed to add animal")
+        console.error(err);
       });
   };
   return (

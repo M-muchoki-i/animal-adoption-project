@@ -1,3 +1,5 @@
+import os 
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -5,21 +7,27 @@ from flask_cors import CORS
 from flask_restful import Api
 from models import db
 from resources.adoptionrequests import AdoptionResource
-# from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
-
+from flask_bcrypt import Bcrypt
+from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
+from dotenv import load_dotenv
 from resources.animal import AnimalResource
 from resources.staffs import StaffResource
-from resources.users import UserResources
+from resources.users import UserResources, LoginResource
 from resources.adoptionrequests import AdoptionResource
 
 
-
+load_dotenv()
 
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///adoption.db'  # or PostgreSQL/MySQL URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# Setup the Flask-JWT-Extended extension
 
+app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET")  # Change this!
+jwt = JWTManager(app)
+
+bcrypt = Bcrypt(app)
 
     # Initialize extensions
 db.init_app(app)
@@ -35,6 +43,7 @@ api.add_resource(AnimalResource, '/animals', '/animals/<int:id>')
 api.add_resource(StaffResource, '/staffs', '/staffs/<int:id>') 
 api.add_resource(UserResources, '/users', '/users/<int:id>') 
 api.add_resource(AdoptionResource, '/adoptions', '/adoptions/<int:id>') 
+api.add_resource(LoginResource, '/login') 
 
 # Entry point for running directly
 if __name__ == '__main__':

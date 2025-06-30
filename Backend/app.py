@@ -37,7 +37,7 @@ api = Api(app)
 # api.add_resource(AdoptionRequest, "/adoptionrequest")
 # api.add_resource(AdoptionRequest, "/adoptionrequest/<int:id>")
 # CORS(app)
-CORS(app, resources={r"/*": {"origins": "http://127.0.0.1:5173"}})
+CORS(app, resources={r"/*": {"origins": "*"}})
   
 
 api.add_resource(AnimalResource, '/animals', '/animals/<int:id>') 

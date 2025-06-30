@@ -13,3 +13,13 @@ A simple React frontend that supports:
 -  Logout
 
 > This frontend is designed to connect with a backend (Flask) that returns a JWT token on login and validates it for protected routes.
+
+ # Features
+ User Authentication
+ View Available Animals
+ Adopt Animals
+ Donate to the Rescue Center
+ Admin Panel (for Staff)
+ File Upload for Animal Images
+ Responsive UI
+ Toast Notifications

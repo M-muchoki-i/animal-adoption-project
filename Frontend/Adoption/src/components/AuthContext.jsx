@@ -1,19 +1,20 @@
 // src/context/AuthContext.jsx
-import { createContext, useContext, useState } from "react";
+import React, { createContext, useState, useContext } from "react";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null); // null means not logged in
+  const [user, setUser] = useState(null);
 
-  const login = (userData) => setUser(userData);
+    
   const logout = () => setUser(null);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, setUser, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
 export const useAuth = () => useContext(AuthContext);
+

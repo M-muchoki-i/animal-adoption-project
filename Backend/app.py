@@ -8,7 +8,7 @@ from flask_restful import Api
 from models import db
 from resources.adoptionrequests import AdoptionResource
 from flask_bcrypt import Bcrypt
-from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
+from flask_jwt_extended import JWTManager
 from dotenv import load_dotenv
 from resources.animal import AnimalResource
 from resources.staffs import StaffResource

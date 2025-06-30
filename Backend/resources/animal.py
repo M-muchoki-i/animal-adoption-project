@@ -66,7 +66,7 @@ class AnimalResource(Resource):
         if data['health_status'] is not None:
             animal.health_status = data['health_status']
         if data['image'] is not None:
-            animal.health_status = data['image']
+            animal.image = data['image']
 
         db.session.commit()
 

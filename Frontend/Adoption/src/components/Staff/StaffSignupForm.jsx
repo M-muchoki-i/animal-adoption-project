@@ -85,13 +85,7 @@ const StaffSignupForm = () => {
         <p className="text-red-500">{errors.contact_info.message}</p>
       )}
 
-      <input
-        {...register("invite_code")}
-        type="text"
-        placeholder="Invite Code"
-        className="w-full mb-4 p-2 border border-gray-300 rounded"
-      />
-
+    
       <button
         type="submit"
         className="w-full py-2 px-4 bg-green-600 text-white rounded hover:bg-green-700"

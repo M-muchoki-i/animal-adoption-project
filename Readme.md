@@ -1,3 +1,8 @@
+🐾 Animal Adoption App – Frontend
+
+This is the frontend application for the Animal Adoption App, a platform that enables users to browse, adopt, and donate for animals in need. The frontend is built using React and communicates with a Flask backend to fetch and manage data related to animals, users, adoptions, donations, and more.
+
+
 # React Dashboard with Signup & Login
 
 A simple React frontend that supports:
@@ -6,3 +11,5 @@ A simple React frontend that supports:
 -  Login
 -  Protected Dashboard (via JWT auth)
 -  Logout
+
+> This frontend is designed to connect with a backend (Flask) that returns a JWT token on login and validates it for protected routes.

@@ -42,6 +42,7 @@ const Header = () => {
               
               {user.role === "staff" && <Link to="/staff">Staff</Link>} */}
               <Link to="/testimonials">Testimonials</Link>
+              <Link to="/adoptions">Track Adoptions</Link>
 
               {/* <Link to="/update_animal">Update Animal</Link> */}
               <button onClick={logout} className="ml-4 underline">Logout</button>

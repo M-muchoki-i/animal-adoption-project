@@ -24,6 +24,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import StaffSignupForm from "./components/Staff/StaffSignupForm";
 import Dashboard from "./pages/Dashboard";
 import UpdateAnimalForm from "./pages/UpdateAnimals";
+import AnimalList from "./components/Staff/AnimalList";
 
 
 
@@ -156,6 +157,14 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <Adopt />
+                  </ProtectedRoute>
+                }
+              />
+                <Route
+                path="/adoptions"
+                element={
+                  <ProtectedRoute>
+                    <AnimalList/>
                   </ProtectedRoute>
                 }
               />

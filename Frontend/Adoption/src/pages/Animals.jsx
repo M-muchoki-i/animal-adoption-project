@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaTrash, FaPaw } from "react-icons/fa";
+import { FaTrash, FaPaw, FaSearch } from "react-icons/fa";
 
 function Animals() {
-  const [animal, setAnimal] = useState([]);
+  const [animals, setAnimal] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
   
@@ -58,19 +59,34 @@ function Animals() {
       });
   };
 
+  // / Filtered animals based on search term
+  const filteredAnimals = animals.filter(animal =>
+    animal.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
       <section>
         <h2 className="text-4xl font-bold mb-6 text-green-700 text-center">
           Our Furry Friends
         </h2>
+        <div className="" max-w-sm mx-auto mb-4 flex items-center>
+          <FaSearch className="" absolute ml-3 text-gray-500 />
+          <input
+            type="text"
+            placeholder="Search animals by name"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-85 p-2 pl-10 border rounded"
+          />
+        </div>
       </section>
 
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1">
-        {animal.length === 0 ? (
+        {filteredAnimals.length === 0 ? (
           <p className="text-gray-600">No animals available.</p>
         ) : (
-          animal.map((animal) => (
+          filteredAnimals.map((animal) => (
             <div
               key={animal.id}
               className="rounded-xl shadow-md overflow-hidden hover:shadow-xl transform transition duration-300 w-84 relative"
@@ -87,7 +103,7 @@ function Animals() {
                 </div>
               </Link>
 
-              {/* ✅ Only show delete button if user is staff */}
+              {/*Only show delete button if user is staff*/}
               {user?.role === "staff" && (
                 <button
                   onClick={() => handleDelete(animal.id)}

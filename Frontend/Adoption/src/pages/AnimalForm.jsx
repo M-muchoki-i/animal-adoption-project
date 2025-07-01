@@ -11,7 +11,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 const animalSchema = z.object({
   name: z.string().min(2, "Name is required"),
   species: z.string().min(2, "Species is required"),
-  age: z.number().min(0, "Age must be a positive number"),
+  age: z
+    .union([z.string(), z.number()]) // Allows both string and number in this field
+    .transform((val) => Number(val)) // Convert to number
+    .refine((val) => val >= 0, { message: "Age must be a positive number" }),
   gender: z.enum(["Male", "Female"], { required_error: "Gender is required" }),
   description: z
     .string()

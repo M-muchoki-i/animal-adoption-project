@@ -25,7 +25,7 @@ const Header = () => {
             <>
               <Link to="/login">Login</Link>
               <Link to="/signup">Signup</Link>
-              <Link to="/staff/signup">Staff Signup</Link>
+              {/* <Link to="/staff/signup">Staff Signup</Link> */}
             </>
           ) : (
 
@@ -43,7 +43,7 @@ const Header = () => {
               {user.role === "staff" && <Link to="/staff">Staff</Link>} */}
               <Link to="/testimonials">Testimonials</Link>
 
-              <Link to="/update_animal">Update Animal</Link>
+              {/* <Link to="/update_animal">Update Animal</Link> */}
               <button onClick={logout} className="ml-4 underline">Logout</button>
               
 

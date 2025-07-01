@@ -2,7 +2,8 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import AnimalForm from "../../pages/AnimalForm";
-
+import AnimalUpdateForm from "../../pages/UpdateAnimals";
+import StaffSignupForm from "./StaffSignupForm";
 
 // Remove the below for now.
 
@@ -27,6 +28,17 @@ const Staff = () => {
         <h2 className="text-xl font-semibold mb-4 text-green-600">Add Animal</h2>
         <AnimalForm />
       </div>
+      
+      <div className="bg-white rounded-lg shadow-md p-4 max-w-4xl mx-auto">
+        <h2 className="text-xl font-semibold mb-4 text-green-600">Add Animal</h2>
+        <AnimalUpdateForm />
+      </div>
+      <div className="bg-white rounded-lg shadow-md p-4 max-w-4xl mx-auto">
+        <h2 className="text-xl font-semibold mb-4 text-green-600">Add Animal</h2>
+        <StaffSignupForm />
+      </div>
+
+      
     </div>
   );
 };

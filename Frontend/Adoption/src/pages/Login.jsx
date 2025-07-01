@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { AuthContext } from "../components/AuthContext"; // or use useAuth if you have it
+import { AuthContext } from "../components/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 
 const API_BASE_URL = "http://127.0.0.1:5000";
@@ -8,7 +8,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState(null);
-  const { setUser } = useContext(AuthContext); // <-- this now works!
+  const { setUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -25,7 +25,11 @@ function Login() {
       const data = await res.json();
 
       if (res.ok) {
-        setUser(data);
+        
+        localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        setUser(data.user); // update AuthContext
         setMessage({ type: "success", text: "Login successful!" });
         navigate("/animals");
       } else {
@@ -37,13 +41,9 @@ function Login() {
   };
 
   return (
-
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="max-w-md w-full space-y-8 p-10 bg-white rounded-xl shadow-xl">
-
-        
         <div className="text-center">
-
           <h2 className="text-3xl font-bold text-green-700 mb-2">
             Welcome back!
           </h2>
@@ -51,6 +51,18 @@ function Login() {
             Enter to get unlimited access to data & information.
           </p>
         </div>
+
+        {message && (
+          <div
+            className={`text-center py-2 px-4 rounded text-sm ${
+              message.type === "success"
+                ? "bg-green-100 text-green-700"
+                : "bg-red-100 text-red-700"
+            }`}
+          >
+            {message.text}
+          </div>
+        )}
 
         <form className="space-y-6" onSubmit={handleLogin}>
           <div>
@@ -67,7 +79,7 @@ function Login() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your mail address"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:green-purple-500"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
 
@@ -78,17 +90,15 @@ function Login() {
             >
               Password <span className="text-red-500">*</span>
             </label>
-            <div className="relative">
-              <input
-                type="password"
-                id="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter password"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-              />
-            </div>
+            <input
+              type="password"
+              id="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter password"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            />
           </div>
 
           <button

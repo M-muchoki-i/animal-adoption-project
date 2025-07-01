@@ -71,8 +71,10 @@ function App() {
               <Route
                 path="/animal_form"
                 element={
-                  
-                    <AnimalForm />
+                  <ProtectedRoute>
+                     <AnimalForm />
+                  </ProtectedRoute>
+                   
                   
                 }
               />

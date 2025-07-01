@@ -1,7 +1,7 @@
 // src/App.jsx
 import React from "react";
 import { AuthProvider } from "./components/AuthContext";
-import Staff from "./components/Staff/Staff";
+import Staff from "./components/Staff/Staff"
 
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -14,7 +14,7 @@ import Login from "./pages/Login";
 import User from "./pages/User";
 import Testimonials from "./pages/Testimonials"; 
 import Animals from "./pages/Animals";
-import AnimalForm from "./pages/AnimalForm";
+// import AnimalForm from "./pages/AnimalForm";
 import Adopt from "./pages/AdoptionRequest";
 import Home from "./pages/Home";
 import AnimalDetails from "./pages/AnimalDetails";
@@ -79,7 +79,7 @@ function App() {
                    
                 }
               />
-               <Route
+               {/* <Route
                 path="/Animal-form"
                 element={
                   <ProtectedRoute>
@@ -88,7 +88,7 @@ function App() {
                   </ProtectedRoute>
                    
                 }
-              />
+             
                <Route
                 path="/update_animal"
                 element={
@@ -100,6 +100,7 @@ function App() {
                 }
               />
               <Route path="/animal_form" element={<AnimalForm />} />
+              <Route path="/animal_form" element={<AnimalForm />} /> */}
               <Route
                 path="/animals"
                 element={

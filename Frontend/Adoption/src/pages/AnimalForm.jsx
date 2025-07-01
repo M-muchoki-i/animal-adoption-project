@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useAuth } from "../components/AuthContext";
 
 function AnimalForm({ onAnimalAdded }) {
   const navigate = useNavigate();
@@ -19,10 +20,12 @@ function AnimalForm({ onAnimalAdded }) {
   });
 
 
-  const user = JSON.parse(localStorage.getItem("user"));
+
+  const { user } = useAuth();
   const token = localStorage.getItem("access_token");
 
   useEffect(() => {
+    if (user === null) return; // Wait until user is loaded
     if (!user || user.role !== "staff") {
       toast.error("Unauthorized. Staff only.");
       navigate("/login");

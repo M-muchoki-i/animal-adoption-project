@@ -3,8 +3,13 @@ import { Link } from "react-router-dom";
 
 function Dashboard() {
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-green-100 to-white">
-      <main className="flex-grow flex items-center justify-center p-4">
+    <div
+      className="flex flex-col min-h-screen bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `url("https://t4.ftcdn.net/jpg/07/08/58/21/360_F_708582158_O0UfysGkmYW2hTKeTCV8iwwdNX8QAfGX.webp")`,
+      }}
+    >
+      <main className="flex-grow flex items-center justify-center p-4 bg-white/70">
         <div className="w-full max-w-xl bg-white rounded-2xl shadow-lg p-8">
           <h2 className="text-3xl font-bold text-center text-green-800 mb-6">
             Welcome to the Animal Adoption Dashboard
@@ -38,7 +43,7 @@ function Dashboard() {
         </div>
       </main>
 
-      <footer className="text-center p-4 text-sm text-gray-500">
+      <footer className="text-center p-4 text-sm text-gray-100 bg-black/30">
         © 2025 Animal Adoption Center. All rights reserved.
       </footer>
     </div>

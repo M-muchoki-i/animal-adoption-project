@@ -40,6 +40,20 @@ function AnimalUpdateForm() {
     } catch (err) {
       alert(err.message);
     }
+    // try {
+    //   const res = await fetch(`http://localhost:5000/adoption/${searchId}`, {
+    //     method: "PATCH",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(formData),
+    //   });
+    //   if (!res.ok) throw new Error("Update failed");
+    //   alert("Animal updated successfully");
+    //   reset();
+    // } catch (err) {
+    //   alert(err.message);
+    // }
   };
 
   return (

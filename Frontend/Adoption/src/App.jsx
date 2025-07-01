@@ -22,6 +22,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProtectedRoute from "./components/ProtectedRoute";
 import StaffSignupForm from "./components/Staff/StaffSignupForm";
+import Dashboard from "./pages/Dashboard";
 
 
 
@@ -52,32 +53,37 @@ function App() {
 
           <main className="flex-grow p-4">
             <Routes>
+              <Route path="/" element={<Dashboard />} />
               {/* Public Routes */}
-              {/* <Route path="/" element={<Home />} /> */}
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<User />} />
               <Route path="/staff/signup" element={<StaffSignupForm />} />
 
-
               {/*  Protected Routes */}
+              <Route
+                path="/home"
+                element={
+                  <ProtectedRoute>
+                    <Home />
+                  </ProtectedRoute>
+                }
+              />
               <Route
                 path="/about"
                 element={
                   <ProtectedRoute>
-                    <About />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/animal_form"
-                element={
-                  <ProtectedRoute>
+
                      <AnimalForm />
                   </ProtectedRoute>
                    
                   
+
+                    <About />
+                  </ProtectedRoute>
+
                 }
               />
+              <Route path="/animal_form" element={<AnimalForm />} />
               <Route
                 path="/animals"
                 element={

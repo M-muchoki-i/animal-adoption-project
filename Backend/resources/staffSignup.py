@@ -1,7 +1,7 @@
 from flask_restful import Resource
 from flask import request, jsonify
 from models import User, db
-from app import bcrypt  # ensure Bcrypt is initialized in your app
+from flask_bcrypt import generate_password_hash  # ensure Bcrypt is initialized in your app
 
 class StaffSignupResource(Resource):
     def post(self):
@@ -17,7 +17,7 @@ class StaffSignupResource(Resource):
         if User.query.filter_by(email=data["email"]).first():
             return {"error": "Email already exists"}, 409
 
-        hashed_password = bcrypt.generate_password_hash(data["password"]).decode("utf-8")
+        hashed_password = generate_password_hash(data["password"]).decode("utf-8")
 
         new_user = User(
             name=data["name"],

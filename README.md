@@ -78,6 +78,9 @@ Image Handling: Preview before upload
 - Here is a brief video show casing the functionality of the web app 
  []()
 
+## Recording of Project
+https://www.loom.com/share/7a4dc3ffcef8431c9a37803e1df57d31?sid=60454285-38ba-4829-8030-46fe0961ad3c 
+
 ## 👥 Contributors
 Robert Haji
 David Kiptum 

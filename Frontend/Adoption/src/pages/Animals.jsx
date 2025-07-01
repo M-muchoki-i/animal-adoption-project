@@ -30,6 +30,12 @@ function Animals() {
   }, [token, navigate]);
 
   const handleDelete = (id) => {
+    // Confirmation message/dialogue If I wanna delete the Animal
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this animal?"
+    );
+    if (!confirmed) return; // If the user cancels, exit the function
+
     if (!token) {
       alert("You must be logged in as staff to delete");
       navigate("/login");

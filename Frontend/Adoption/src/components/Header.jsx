@@ -4,6 +4,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../components/AuthContext";
 
+
 const Header = () => {
   const { user, logout } = useAuth();
 
@@ -28,11 +29,11 @@ const Header = () => {
             </>
           ) : (
 
-              <>
-              <Link to={"/home"}>Home</Link>
+              
+              
 
             <>
-
+              <Link to={"/home"}>Home</Link>
               <Link to="/about">About Us</Link>
               <Link to="/animals">Animals</Link>
               <Link to="/adopt">Adopt</Link>
@@ -44,9 +45,7 @@ const Header = () => {
 
               <Link to="/update_animal">Update Animal</Link>
               <button onClick={logout} className="ml-4 underline">Logout</button>
-              <button onClick={logout} className="ml-4 underline">
-                Logout
-              </button>
+              
 
             </>
           )}

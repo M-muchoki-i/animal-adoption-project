@@ -125,6 +125,16 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+               <Route
+                path="/update_animal"
+                element={
+                  <ProtectedRoute>
+
+                     <UpdateAnimalForm/>
+                  </ProtectedRoute>
+                   
+                }
+              />
               <Route
                 path="/staff"
                 element={

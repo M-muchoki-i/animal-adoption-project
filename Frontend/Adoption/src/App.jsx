@@ -73,14 +73,19 @@ function App() {
                 element={
                   <ProtectedRoute>
 
-                     <AnimalForm />
+                     <About/>
                   </ProtectedRoute>
                    
-                  
+                }
+              />
+               <Route
+                path="/Animal-form"
+                element={
+                  <ProtectedRoute>
 
-                    <About />
+                     <AnimalForm/>
                   </ProtectedRoute>
-
+                   
                 }
               />
               <Route path="/animal_form" element={<AnimalForm />} />

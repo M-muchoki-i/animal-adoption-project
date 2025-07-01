@@ -70,19 +70,19 @@ function Animals() {
         <h2 className="text-4xl font-bold mb-6 text-green-700 text-center">
           Our Furry Friends
         </h2>
-        <div className="" max-w-sm mx-auto mb-4 flex items-center>
+        <div className="" max-w-sm mx-auto mb-4 flex items-center relative>
           <FaSearch className="" absolute ml-3 text-gray-500 />
           <input
             type="text"
             placeholder="Search animals by name"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-85 p-2 pl-10 border rounded"
+            className="w-85 p-2 pl-10 border border-gray-300 rounded-full bg-white shadow-md focus:outline-none focus:ring-2 focus:ring-green-500"
           />
         </div>
       </section>
 
-      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1">
+      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap- mt-6">
         {filteredAnimals.length === 0 ? (
           <p className="text-gray-600">No animals available.</p>
         ) : (

@@ -6,18 +6,28 @@ function Animals() {
   const [animal, setAnimal] = useState([]);
   const navigate = useNavigate();
 
-  // 🔑 Get user info from localStorage
+  
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("access_token");
 
   useEffect(() => {
-    fetch("http://localhost:5000/animals")
-      .then((res) => res.json())
+    fetch("http://localhost:5000/animals", {
+      headers: {
+        Authorization: `Bearer ${token}`, 
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Unauthorized or error fetching animals");
+        }
+        return res.json();
+      })
       .then((data) => setAnimal(data))
       .catch((error) => {
         console.error("Error fetching animals:", error);
+       
       });
-  }, []);
+  }, [token, navigate]);
 
   const handleDelete = (id) => {
     if (!token) {
@@ -57,7 +67,7 @@ function Animals() {
           animal.map((animal) => (
             <div
               key={animal.id}
-              className="rounded-xl shadow-md overflow-hidden hover:shadow-xl transform transition duration-300 w-56 relative"
+              className="rounded-xl shadow-md overflow-hidden hover:shadow-xl transform transition duration-300 w-84 relative"
             >
               <Link to={`/animals/${animal.id}`}>
                 <img

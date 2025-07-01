@@ -14,16 +14,16 @@ class AnimalResource(Resource):
     parser.add_argument('adoption_status', required=True, help ="Adoption status is required")
     parser.add_argument('health_status', required=False)
     
-    # @jwt_required()
-    def get(self, id=None):
-        if id is None:
-            animals = Animal.query.all()
-            return [animal.to_dict() for animal in animals], 200  
-        else:
-            animal = Animal.query.filter_by(id=id).first()
-            if animal:
-                return animal.to_dict(), 201
-            return {"error": "Animal not found"}, 404
+    @jwt_required(optional=True)
+    def get(self, id=None):  # ← handles both list and detail
+      if id is None:
+        animals = Animal.query.all()
+        return [animal.to_dict() for animal in animals], 200  
+      else:
+        animal = Animal.query.filter_by(id=id).first()
+        if animal:
+            return animal.to_dict(), 200
+        return {"error": "Animal not found"}, 404
         
     @jwt_required()    
     def post(self):

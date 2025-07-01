@@ -1,13 +1,28 @@
+import { useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuth } from "../components/AuthContext";
 
-const CreateAdoptionForm = () => {
+const AdoptionForm = () => {
+  const { state } = useLocation();
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const animal = state?.animal;
+
+  useEffect(() => {
+    if (!animal) {
+      toast.error("No animal data found. Redirecting...");
+      navigate("/animals");
+    }
+  }, [animal, navigate]);
+
   const formik = useFormik({
     initialValues: {
-      status: "",
-      user_id: "",
-      animal_id: "",
+      status: "pending",
+      user_id: user?.id || "",
+      animal_id: animal?.id || "",
     },
     validationSchema: Yup.object({
       status: Yup.string().required("Status is required"),
@@ -16,7 +31,7 @@ const CreateAdoptionForm = () => {
     }),
     onSubmit: async (values, { resetForm }) => {
       try {
-        const res = await fetch("http://127.0.0.1:5555/adoptions", {
+        const res = await fetch("http://127.0.0.1:5000/adoptions", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -27,8 +42,9 @@ const CreateAdoptionForm = () => {
         const data = await res.json();
 
         if (res.ok) {
-          toast.success("🎉 Adoption request created!");
+          toast.success("🎉 Adoption request submitted!");
           resetForm();
+          navigate("/animals");
         } else {
           toast.error(`❌ Failed: ${data.message || "Unknown error"}`);
         }
@@ -39,70 +55,89 @@ const CreateAdoptionForm = () => {
     },
   });
 
+  if (!animal || !user) return <p>Loading...</p>;
+
   return (
-    <>
-      <h2 className="text-3xl text-green-600 font-serif font-bold text-center">
-        Adopt a puppy today
+    <div className="max-w-lg mx-auto bg-white shadow p-6 rounded-lg space-y-6">
+      <h2 className="text-2xl font-bold text-center text-green-600">
+        Adoption Request
       </h2>
-      <form
-        onSubmit={formik.handleSubmit}
-        className="max-w-md mx-auto bg-white p-6 shadow rounded-lg space-y-4"
-      >
-        <div>
-          <label className="block mb-1">Status</label>
-          <select
-            name="status"
-            value={formik.values.status}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            className="w-full border px-2 py-1 rounded"
-          >
-            <option value="" disabled>
-              Select status
-            </option>
-            <option value="pending">Pending</option>
-            <option value="adopted">Adopted</option>
-          </select>
-          {formik.touched.status && formik.errors.status && (
-            <p className="text-red-500 text-sm">{formik.errors.status}</p>
-          )}
-        </div>
-        <div>
-          <label>User ID</label>
-          <input
-            name="user_id"
-            type="number"
-            value={formik.values.user_id}
-            onChange={formik.handleChange}
-            className="w-full border px-2 py-1 rounded"
+
+      {/* Animal Image */}
+      {animal.image && (
+        <div className="flex justify-center">
+          <img
+            src={animal.image}
+            alt={animal.name}
+            className="w-full h-64 object-cover rounded-lg mb-4 shadow"
           />
-          {formik.touched.user_id && formik.errors.user_id && (
-            <p className="text-red-500 text-sm">{formik.errors.user_id}</p>
-          )}
         </div>
+      )}
+
+      <form onSubmit={formik.handleSubmit} className="space-y-4">
         <div>
-          <label>Animal ID</label>
+          <label className="block mb-1 font-semibold">User Name</label>
           <input
-            name="animal_id"
-            type="number"
-            value={formik.values.animal_id}
-            onChange={formik.handleChange}
-            className="w-full border px-2 py-1 rounded"
+            type="text"
+            value={user.name}
+            readOnly
+            className="w-full border px-3 py-2 rounded bg-gray-100"
           />
-          {formik.touched.animal_id && formik.errors.animal_id && (
-            <p className="text-red-500 text-sm">{formik.errors.animal_id}</p>
-          )}
         </div>
+
+        <div>
+          <label className="block mb-1 font-semibold">Pet Name</label>
+          <input
+            type="text"
+            value={animal.name}
+            readOnly
+            className="w-full border px-3 py-2 rounded bg-gray-100"
+          />
+        </div>
+
+        <div>
+          <label className="block mb-1 font-semibold">Description</label>
+          <textarea
+            value={animal.description}
+            readOnly
+            className="w-full border px-3 py-2 rounded bg-gray-100"
+          />
+        </div>
+
+        <div>
+          <label className="block mb-1 font-semibold">Adoption Status</label>
+          <input
+            type="text"
+            value={animal.adoption_status}
+            readOnly
+            className="w-full border px-3 py-2 rounded bg-gray-100"
+          />
+        </div>
+
+        {/* Hidden form fields for submission */}
+        <input type="hidden" name="user_id" value={formik.values.user_id} />
+        <input type="hidden" name="animal_id" value={formik.values.animal_id} />
+        <input type="hidden" name="status" value={formik.values.status} />
 
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
         >
-          Submit
+          Request for adoption
         </button>
       </form>
-    </>
+
+      {/* Back Button */}
+      <div className="pt-4 text-center">
+        <button
+          onClick={() => navigate("/animals")}
+          className="text-sm text-gray-600 underline hover:text-green-700"
+        >
+          ← Back to Animals
+        </button>
+      </div>
+    </div>
   );
 };
 
-export default CreateAdoptionForm;
+export default AdoptionForm;

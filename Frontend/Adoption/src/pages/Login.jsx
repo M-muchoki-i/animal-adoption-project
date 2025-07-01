@@ -31,7 +31,7 @@ function Login() {
 
         setUser(data.user); // update AuthContext
         setMessage({ type: "success", text: "Login successful!" });
-        navigate("/animals");
+        navigate("/home");
       } else {
         setMessage({ type: "error", text: data.error || "Login failed" });
       }

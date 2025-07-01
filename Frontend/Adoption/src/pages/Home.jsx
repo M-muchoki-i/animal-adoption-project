@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 
@@ -23,10 +22,10 @@ const Home = () => {
               Adopt Now
             </Link>
             <Link
-              to="/donate"
+              to="/animals"
               className="bg-yellow-500 text-white px-6 py-3 rounded-md hover:bg-yellow-600 transition"
             >
-              Donate
+              Our Fury Friends
             </Link>
           </div>
         </div>

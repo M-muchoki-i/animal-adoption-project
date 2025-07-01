@@ -26,13 +26,14 @@ const Header = () => {
             </>
           ) : (
               <>
-                
+              <Link to={"/home"}>Home</Link>
               <Link to="/about">About Us</Link>
               <Link to="/animals">Animals</Link>
               <Link to="/adopt">Adopt</Link>
               <Link to="/animal_form">Animal_form</Link>
               <Link to="/staff">Staff</Link>
               <Link to="/testimonials">Testimonials</Link>
+              <Link to="/update_animal">Update Animal</Link>
               <button onClick={logout} className="ml-4 underline">Logout</button>
             </>
           )}

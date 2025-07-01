@@ -56,7 +56,7 @@ function Animals() {
     <>
       <section>
         <h2 className="text-4xl font-bold mb-6 text-green-700 text-center">
-          Our Furry Friends
+          Our Fury Friends
         </h2>
       </section>
 
@@ -78,6 +78,9 @@ function Animals() {
                 <div className="p-4 flex flex-col gap-2">
                   <h3 className="font-semibold text-lg">{animal.name}</h3>
                   <p className="text-base text-black">Age: {animal.age}</p>
+                   {user?.role === "staff" && (
+                   <p className="text-base text-gray-800 font-semibold">Animal ID: {animal.id}</p>
+                     )}
                 </div>
               </Link>
 

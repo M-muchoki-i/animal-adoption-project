@@ -23,6 +23,7 @@ import "react-toastify/dist/ReactToastify.css";
 import ProtectedRoute from "./components/ProtectedRoute";
 import StaffSignupForm from "./components/Staff/StaffSignupForm";
 import Dashboard from "./pages/Dashboard";
+import UpdateAnimalForm from "./pages/UpdateAnimals";
 
 
 
@@ -84,6 +85,16 @@ function App() {
                   <ProtectedRoute>
 
                      <AnimalForm/>
+                  </ProtectedRoute>
+                   
+                }
+              />
+               <Route
+                path="/update_animal"
+                element={
+                  <ProtectedRoute>
+
+                     <UpdateAnimalForm/>
                   </ProtectedRoute>
                    
                 }

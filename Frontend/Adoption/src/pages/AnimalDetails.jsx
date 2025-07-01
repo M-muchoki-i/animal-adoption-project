@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function AnimalDetails() {
   const [animal, setAnimal] = useState(null);
@@ -22,6 +23,14 @@ function AnimalDetails() {
           alt={animal.name}
           className="rounded-xl object-cover w-full h-[400px]"
         />
+         <Link
+          to={`/adopt/${animal.id}`}
+          state={{ animal }}
+          title="Adopt Me"
+          className="absolute top-2 left-2 text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded shadow"
+        >
+          Adopt Me
+        </Link>
       </div>
 
       {/* Right: Description Content */}
@@ -37,16 +46,25 @@ function AnimalDetails() {
         <p className="text-gray-700 leading-relaxed">{animal.description}</p>
 
         <div className="text-sm text-gray-600 space-y-2">
-          <p><strong>Species:</strong> {animal.species}</p>
-          <p><strong>Gender:</strong> {animal.gender}</p>
-          <p><strong>Health:</strong> {animal.health_status}</p>
+          <p>
+            <strong>Species:</strong> {animal.species}
+          </p>
+          <p>
+            <strong>Gender:</strong> {animal.gender}
+          </p>
+          <p>
+            <strong>Health:</strong> {animal.health_status}
+          </p>
+        
         </div>
+        
 
         <details className="border rounded p-4">
           <summary className="font-medium text-lg">More Info</summary>
           <p className="text-gray-600 mt-2">
-            This animal is looking for a loving home. If you're interested in adoption,
-            please contact the shelter or visit us during working hours.
+            This animal is looking for a loving home. If you're interested in
+            adoption, please contact the shelter or visit us during working
+            hours.
           </p>
         </details>
       </div>

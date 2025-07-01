@@ -22,9 +22,12 @@ load_dotenv()
 
 app = Flask(__name__)
 
-
+database= os.environ.get("DATABASE_URL")
+print(type(database))
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///adoption.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["SQLALCHEMY_ECHO"] = True
 # Setup the Flask-JWT-Extended extension

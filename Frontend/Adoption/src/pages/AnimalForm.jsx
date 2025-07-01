@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useAuth } from "../components/AuthContext";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { BASE_URL } from "../../utils";
 
 // Validation schemas for the Animal
 
@@ -67,7 +68,7 @@ function AnimalForm({ onAnimalAdded }) {
   }, [user, navigate]);
 
   const onSubmit = (values) => {
-    fetch("http://localhost:5000/animals", {
+    fetch(`${BASE_URL}/animals`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

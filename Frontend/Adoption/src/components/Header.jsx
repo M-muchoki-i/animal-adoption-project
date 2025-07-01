@@ -36,7 +36,7 @@ const Header = () => {
               <Link to={"/home"}>Home</Link>
               <Link to="/about">About Us</Link>
               <Link to="/animals">Animals</Link>
-              <Link to="/adopt">Adopt</Link>
+              {/* <Link to="/adopt">Adopt</Link> */}
               <Link to="/staff">Staff</Link>
               {/* Ensure only staff can see staff on the Header
               

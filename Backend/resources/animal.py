@@ -1,6 +1,6 @@
 from flask import request
 from flask_restful import Resource, reqparse
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt
 from models import Animal, db
 
 class AnimalResource(Resource):
@@ -14,7 +14,7 @@ class AnimalResource(Resource):
     parser.add_argument('adoption_status', required=True, help ="Adoption status is required")
     parser.add_argument('health_status', required=False)
     
-    
+    # @jwt_required()
     def get(self, id=None):
         if id is None:
             animals = Animal.query.all()
@@ -27,9 +27,12 @@ class AnimalResource(Resource):
         
     @jwt_required()    
     def post(self):
-        user = get_jwt_identity()
+        # user= get_jwt_identity()  # This is a string now: "1"
+        claims = get_jwt()
+        role = claims.get("role")
+
         
-        if user ["role"]!="staff":
+        if role!="staff":
             return {"error": "Only staff can add animals."}, 403
         data = self.parser.parse_args()
         animals = Animal(**data)
@@ -40,8 +43,10 @@ class AnimalResource(Resource):
     
     @jwt_required()
     def patch(self, id):
-        user = get_jwt_identity() 
-        if user["role"] != "staff":
+        claims = get_jwt()
+        role = claims.get("role")
+
+        if role != "staff":
             return {"error": "Only staff can update animals."}, 403
 
         animal = Animal.query.filter_by(id=id).first()
@@ -74,9 +79,11 @@ class AnimalResource(Resource):
     
     @jwt_required()
     def delete(self, id):
-        user = get_jwt_identity() 
+        claims = get_jwt()
+        role = claims.get("role")
+ 
 
-        if user["role"]!="staff":
+        if role!="staff":
             return {"error": "Only staff can delete animals."}, 403
          
         animal = Animal.query.filter_by(id=id).first()

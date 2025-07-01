@@ -22,6 +22,7 @@ const Header = () => {
             <>
               <Link to="/login">Login</Link>
               <Link to="/signup">Signup</Link>
+              <Link to="/staff/signup">Staff Signup</Link>
             </>
           ) : (
               <>
@@ -29,8 +30,8 @@ const Header = () => {
               <Link to="/about">About Us</Link>
               <Link to="/animals">Animals</Link>
               <Link to="/adopt">Adopt</Link>
-              <Link to="/donate">Donate</Link>
-              <Link to="/user">User</Link>
+              <Link to="/animal_form">Animal_form</Link>
+              <Link to="/staff">Staff</Link>
               <Link to="/testimonials">Testimonials</Link>
               <button onClick={logout} className="ml-4 underline">Logout</button>
             </>

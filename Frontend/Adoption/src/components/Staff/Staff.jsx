@@ -6,7 +6,8 @@ import User from "../../pages/User";
 import CreateAdoptionForm from "../../pages/AdoptionRequest";
 
 const Staff = () => {
-  const { user } = useAuth(); // Retrieve user data from context
+  const {user} = useAuth(); // Retrieve user data from context
+  
 
   // Check if user is authenticated and has the 'staff' role
   if (!user || user.role !== "staff") {

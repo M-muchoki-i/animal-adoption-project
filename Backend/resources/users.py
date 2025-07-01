@@ -101,7 +101,7 @@ class LoginResource(Resource):
         user = User.query.filter_by(email=email).first()
 
         if user and check_password_hash(user.password, password):
-             token = create_access_token(identity={"id": user.id, "name": user.name, "role": user.role})
+             token = create_access_token( identity=str(user.id), additional_claims={"name": user.name, "role": user.role})
 
              return {
                "message": "Login successful",

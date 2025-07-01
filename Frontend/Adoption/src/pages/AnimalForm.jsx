@@ -18,23 +18,23 @@ function AnimalForm({ onAnimalAdded }) {
     },
   });
 
-  // 🔐 Check user role and token
+
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("access_token");
 
-  // useEffect(() => {
-  //   if (!user || user.role !== "staff") {
-  //     toast.error("Unauthorized. Staff only.");
-  //     navigate("/login");
-  //   }
-  // }, [user, navigate]);
+  useEffect(() => {
+    if (!user || user.role !== "staff") {
+      toast.error("Unauthorized. Staff only.");
+      navigate("/login");
+    }
+  }, [user, navigate]);
 
   const onSubmit = (values) => {
     fetch("http://localhost:5000/animals", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // 🔐 attach JWT token
+        Authorization: `Bearer ${token}`, 
       },
       body: JSON.stringify(values),
     })
@@ -59,7 +59,6 @@ function AnimalForm({ onAnimalAdded }) {
         Add a New Animal
       </h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        {/* Form fields stay unchanged */}
         <div>
           <label className="block mb-1">Name</label>
           <input

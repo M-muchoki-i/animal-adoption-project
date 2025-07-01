@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { BASE_URL } from "../../../utils";
 
 const StaffSignupForm = () => {
   const {
@@ -12,7 +13,7 @@ const StaffSignupForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      const res = await fetch("http://localhost:5000/staff/signup", {
+      const res = await fetch(`${BASE_URL}/staff/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

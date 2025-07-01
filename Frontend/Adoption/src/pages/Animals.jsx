@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaTrash, FaPaw, FaSearch } from "react-icons/fa";
+import { BASE_URL } from "../../utils";
 
 function Animals() {
   const [animals, setAnimal] = useState([]);
@@ -12,7 +13,7 @@ function Animals() {
   const token = localStorage.getItem("access_token");
 
   useEffect(() => {
-    fetch("http://localhost:5000/animals", {
+    fetch(`${BASE_URL}/animals`, {
       headers: {
         Authorization: `Bearer ${token}`, 
       },
@@ -43,7 +44,7 @@ function Animals() {
       return;
     }
 
-    fetch(`http://localhost:5000/animals/${id}`, {
+    fetch(`${BASE_URL}/animals/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -82,7 +83,7 @@ function Animals() {
         </div>
       </section>
 
-      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap- mt-6">
+      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-4">
         {filteredAnimals.length === 0 ? (
           <p className="text-gray-600">No animals available.</p>
         ) : (

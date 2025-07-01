@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { BASE_URL } from "../../utils";
 
 function AnimalDetails() {
   const [animal, setAnimal] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/animals/${id}`)
+    fetch(`${BASE_URL}/animals/${id}`)
       .then((res) => res.json())
       .then((data) => setAnimal(data));
   }, [id]);

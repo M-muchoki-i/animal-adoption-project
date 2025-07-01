@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
+import { BASE_URL } from "../../../utils";
 // import {Link} from 'react-router-dom'
 
 function AnimalList() {
   const [adoptions, setAdoptions] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/adoptions")
+    fetch(`${BASE_URL}/adoptions`)
       .then((res) => res.json())
       .then((data) => {
         setAdoptions(data);

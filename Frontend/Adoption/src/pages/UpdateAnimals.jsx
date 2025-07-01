@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { BASE_URL } from "../../utils";
 
 
 function AnimalUpdateForm() {
@@ -12,7 +13,7 @@ function AnimalUpdateForm() {
     if (!searchId) return;
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/animals/${searchId}`);
+      const res = await fetch(`${BASE_URL}/animals/${searchId}`);
       if (!res.ok) throw new Error("Animal not found");
       const data = await res.json();
       Object.entries(data).forEach(([key, value]) => {
